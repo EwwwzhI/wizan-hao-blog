@@ -1,0 +1,82 @@
+---
+import Toc from '~/components/toc/Toc.astro'
+import TocSidebar from '~/components/toc/TocSidebar.astro'
+import { FEATURES } from '~/config'
+
+import type { MarkdownHeading } from 'astro'
+
+interface Props {
+  headings: MarkdownHeading[]
+}
+
+const { headings } = Astro.props
+
+const { toc } = FEATURES
+const tocPosition = Array.isArray(toc) && toc[0] && toc[1].displayPosition
+const tocDisplayMode = Array.isArray(toc) && toc[0] && toc[1].displayMode
+---
+
+{
+  headings.length > 0 && (
+    <aside id="desktop-aside" class="desktop-aside" data-position={tocPosition}>
+      <button
+        type="button"
+        class="desktop-aside__trigger"
+        aria-label="Table of contents"
+        title="Table of contents"
+        data-display-mode={tocDisplayMode}
+      >
+        Contents
+      </button>
+      <Toc isArticle={true}>
+        <TocSidebar headings={headings} />
+      </Toc>
+    </aside>
+  )
+}
+
+<style>
+  .desktop-aside {
+    position: fixed;
+    top: 8.875rem;
+    z-index: 100;
+    left: calc(100vw - 15.625rem - 3.2rem);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .desktop-aside[data-position='left'] {
+    left: 2rem;
+  }
+
+  .desktop-aside__trigger {
+    display: flex;
+    align-items: center;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #555;
+    font-size: 0.875rem;
+    opacity: 0.3;
+    transition: opacity 0.7s ease-in-out;
+  }
+
+  .desktop-aside__trigger[data-display-mode='always'] {
+    opacity: 0.6;
+  }
+
+  .desktop-aside:hover .desktop-aside__trigger[data-display-mode='hover'],
+  :global(.slide-enter-content:hover)
+    .desktop-aside__trigger[data-display-mode='content'],
+  :global(.group\/content:hover)
+    .desktop-aside__trigger[data-display-mode='content'] {
+    opacity: 0.6;
+  }
+
+  @media (max-width: 1127.9px) {
+    .desktop-aside {
+      display: none;
+    }
+  }
+</style>

@@ -1,0 +1,122 @@
+---
+import Link from '~/components/base/Link.astro'
+import { UI } from '~/config'
+
+export interface GroupItemData {
+    id: string;
+    link: string;
+    desc: string;
+    icon: string;
+}
+
+interface Props {
+  items: GroupItemData[]
+}
+
+const { items } = Astro.props
+const { maxGroupColumns, showGroupItemColorOnHover } = UI.groupView
+---
+
+<div
+  class="group-grid"
+  style={`--group-columns: ${maxGroupColumns};`}
+>
+  {
+    items.map((item) => (
+      <Link
+        class="group-card"
+        href={item.link}
+        aria-hidden={true}
+        external={true}
+      >
+        <div class="group-card__icon-wrap">
+          <div
+            class={`group-card__icon ${item.icon}`}
+            data-show-color={showGroupItemColorOnHover ? '' : undefined}
+          />
+        </div>
+        <div class="group-card__body">
+          <div class="group-card__title">{item.id}</div>
+          <div class="group-card__desc">{item.desc}</div>
+        </div>
+      </Link>
+    ))
+  }
+</div>
+
+<style>
+  .group-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 0.75rem;
+    padding: 2rem 0;
+    margin: 0 auto;
+    max-width: calc(
+      350px * var(--group-columns) + (var(--group-columns) - 1) * 0.75rem
+    );
+  }
+
+  .group-card {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0.875rem 0.875rem;
+    border-radius: 0.375rem;
+    background: transparent;
+    border-bottom: none !important;
+    font-size: 1.1rem;
+    transition:
+      background-color 0.3s ease,
+      opacity 0.3s ease;
+  }
+
+  .group-card:hover {
+    background: #88888811;
+  }
+
+  :global(.dark) .group-card:hover {
+    background: #88888818;
+  }
+
+  .group-card__icon-wrap {
+    padding-top: 0.5rem;
+    padding-right: 1.25rem;
+  }
+
+  .group-card__icon {
+    line-height: 2.25rem;
+    font-size: 1.875rem;
+    opacity: 0.5;
+    filter: saturate(0);
+    transition:
+      filter 0.3s ease,
+      opacity 0.3s ease;
+  }
+
+  .group-card:hover .group-card__icon[data-show-color] {
+    filter: saturate(1);
+  }
+
+  .group-card__body {
+    flex: 1 1 auto;
+  }
+
+  .group-card__desc {
+    opacity: 0.5;
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.45;
+  }
+
+  @media (max-width: 1127.9px) {
+    .group-grid {
+      max-width: 712px !important;
+    }
+  }
+
+  @media (max-width: 767.9px) {
+    .group-grid {
+      max-width: 350px !important;
+    }
+  }
+</style>

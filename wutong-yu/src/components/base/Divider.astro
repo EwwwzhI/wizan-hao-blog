@@ -1,0 +1,27 @@
+---
+interface Props {
+  class?: string
+}
+
+const { class: className } = Astro.props
+---
+
+<hr
+  class:list={['divider', className]}
+  aria-hidden={true}
+/>
+
+<style>
+  .divider {
+    width: 2px;
+    height: 1.1rem;
+    margin: 0 0.15rem;
+    border: 0;
+    flex-shrink: 0;
+    background: #ddd;
+  }
+
+  :global(.dark) .divider {
+    background: #333;
+  }
+</style>

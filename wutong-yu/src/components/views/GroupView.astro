@@ -1,0 +1,52 @@
+---
+import { getCollection } from 'astro:content'
+
+import Warning from '~/components/base/Warning.astro'
+import Categorizer from '~/components/base/Categorizer.astro'
+import GroupItem from '~/components/views/GroupItem.astro'
+
+import type { CollectionEntry } from 'astro:content'
+import type { GroupItemData } from '~/components/views/GroupItem.astro'
+
+interface Props {
+  collectionType: 'projects'
+}
+
+const { collectionType } = Astro.props
+
+const WARNING = `No content available for display.
+  Please review and modify <code>GroupView.astro</code> as needed.`
+
+let isEmpty = false
+let data: Record<string, GroupItemData[]> = {}
+
+const projects = await getCollection(collectionType)
+isEmpty = projects.length === 0
+
+type ProjectEntry = CollectionEntry<'projects'>['data']
+
+data = projects
+  .map((project: CollectionEntry<'projects'>) => project.data)
+  .reduce((acc: Record<string, GroupItemData[]>, item: ProjectEntry) => {
+    const { category, ...rest } = item
+    ;(acc[category] ??= []).push(rest)
+    return acc
+  }, {})
+---
+
+{
+  isEmpty ? (
+    <Warning html={WARNING} />
+  ) : (
+    <>
+      {Object.keys(data).map((key, idx) => (
+        <div class="slide-enter" style={{ '--enter-stage': idx }}>
+          <Categorizer text={key} wide={true} />
+          <div class="mt-6">
+            <GroupItem items={data[key]} />
+          </div>
+        </div>
+      ))}
+    </>
+  )
+}

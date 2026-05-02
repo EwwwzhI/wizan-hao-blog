@@ -1,0 +1,94 @@
+---
+import { render } from 'astro:content'
+
+import Categorizer from '~/components/base/Categorizer.astro'
+import ListItem from '~/components/views/ListItem.astro'
+
+import { getYear } from '~/utils/datetime'
+import { getFilteredPosts, getSortedPosts, getMinutesRead } from '~/utils/data'
+
+import type { CollectionEntry } from 'astro:content'
+
+interface Props {
+  collectionType: 'blog'
+}
+
+const { collectionType } = Astro.props
+
+/* Posts */
+const groupedBlogItems: {
+  year: string
+  items: {
+    idx: number
+    year: string
+    id: CollectionEntry<'blog'>['id']
+    data: CollectionEntry<'blog'>['data']
+    minutesRead: ReturnType<typeof getMinutesRead>
+  }[]
+}[] = []
+const items = await getFilteredPosts(collectionType)
+const sorted = getSortedPosts(items)
+
+const enriched = await Promise.all(
+  sorted.map(async (item, idx) => {
+    const { data, id } = item
+    const { remarkPluginFrontmatter } = await render(item)
+
+    const minutesRead = getMinutesRead(
+      data.minutesRead,
+      remarkPluginFrontmatter.minutesRead
+    )
+
+    return {
+      idx,
+      year: getYear(data.pubDate).toString(),
+      id,
+      data,
+      minutesRead,
+    }
+  })
+)
+
+for (const item of enriched) {
+  const last = groupedBlogItems[groupedBlogItems.length - 1]
+  if (!last || last.year !== item.year) {
+    groupedBlogItems.push({ year: item.year, items: [item] })
+  } else {
+    last.items.push(item)
+  }
+}
+---
+
+{
+  <div aria-label="Post list">
+    {groupedBlogItems.length === 0 ? (
+      <div class="py-2 op-50">nothing here yet</div>
+    ) : (
+      groupedBlogItems.map((group) => {
+        const idx = group.items[0].idx
+
+        return (
+          <section data-year={group.year} class="mb-16">
+            <Categorizer {idx} text={group.year} />
+
+            {group.items.map(({ data, id, minutesRead, idx }) => (
+              <ListItem
+                {idx}
+                {collectionType}
+                postSlug={id}
+                title={data.title}
+                tags={data.tags}
+                date={data.pubDate}
+                minutesRead={minutesRead}
+                radio={data.radio}
+                video={data.video}
+                platform={data.platform}
+                redirect={data.redirect}
+              />
+            ))}
+          </section>
+        )
+      })
+    )}
+  </div>
+}

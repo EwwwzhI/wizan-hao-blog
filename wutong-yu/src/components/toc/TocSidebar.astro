@@ -1,0 +1,68 @@
+---
+import TocItem from '~/components/toc/TocItem.astro'
+import Link from '~/components/base/Link.astro'
+import { generateToc } from '~/utils/toc'
+import { FEATURES } from '~/config'
+
+import type { MarkdownHeading } from 'astro'
+
+interface Props {
+  headings: MarkdownHeading[]
+}
+
+const { headings } = Astro.props
+
+const { toc } = FEATURES
+if (!toc || (Array.isArray(toc) && !toc[0])) return
+const { minHeadingLevel, maxHeadingLevel, displayPosition, displayMode } =
+  toc[1]
+const specHeadings = generateToc(headings, minHeadingLevel, maxHeadingLevel)
+---
+
+<nav
+  id="toc-sidebar"
+  class="desktop-toc"
+  aria-label="Table of contents"
+  data-position={displayPosition}
+  data-display-mode={displayMode}
+>
+  <Link href="#skip-toc" class="sr-only focus:(not-sr-only fixed start-1 top-1.5 op-20)">
+    Skip toc
+  </Link>
+  <ul class="desktop-toc__list">
+    {!!specHeadings.length && specHeadings.map((heading) => <TocItem {heading} />)}
+  </ul>
+  <div id="skip-toc" class="hidden"></div>
+</nav>
+
+<style>
+  .desktop-toc {
+    display: flex;
+    flex-direction: column;
+    width: 15.625rem;
+    max-height: 74vh;
+    overflow: hidden;
+    font-size: 0.875rem;
+    opacity: 0;
+    transition: opacity 0.7s ease-in-out;
+  }
+
+  .desktop-toc[data-display-mode='always'] {
+    opacity: 0.6;
+  }
+
+  .desktop-toc[data-display-mode='hover']:hover {
+    opacity: 0.6;
+  }
+
+  :global(.slide-enter-content:hover) .desktop-toc[data-display-mode='content'],
+  :global(.group\/content:hover) .desktop-toc[data-display-mode='content'] {
+    opacity: 0.6;
+  }
+
+  .desktop-toc__list {
+    height: 100%;
+    overflow-y: auto;
+    margin-top: -0.5rem;
+  }
+</style>
