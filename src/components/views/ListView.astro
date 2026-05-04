@@ -1,0 +1,49 @@
+---
+import Categorizer from '~/components/base/Categorizer.astro'
+import ListItem from '~/components/views/ListItem.astro'
+
+import { getGroupedPostsByYear } from '~/utils/data'
+
+interface Props {
+  collectionType: 'blog'
+  urlPath?: string
+}
+
+const { collectionType, urlPath = collectionType } = Astro.props
+
+const groupedBlogItems = await getGroupedPostsByYear(collectionType)
+---
+
+{
+  <div aria-label="Post list">
+    {groupedBlogItems.length === 0 ? (
+      <div class="py-2 op-50">nothing here yet</div>
+    ) : (
+      groupedBlogItems.map((group) => {
+        const idx = group.items[0].idx
+
+        return (
+          <section data-year={group.year} class="mb-16">
+            <Categorizer {idx} text={group.year} />
+
+            {group.items.map(({ data, id, minutesRead, idx }) => (
+              <ListItem
+                {idx}
+                urlPath={urlPath}
+                postSlug={id}
+                title={data.title}
+                tags={data.tags}
+                date={data.pubDate}
+                minutesRead={minutesRead}
+                radio={data.radio}
+                video={data.video}
+                platform={data.platform}
+                redirect={data.redirect}
+              />
+            ))}
+          </section>
+        )
+      })
+    )}
+  </div>
+}

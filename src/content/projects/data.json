@@ -1,0 +1,24 @@
+[
+  {
+    "id": "wutong-yu-blog",
+    "link": "https://github.com/wutongyuonce/wutong-yu-blog",
+    "desc": "my personal website",
+    "icon": "i-carbon:license-third-party",
+    "category": "Frontend"
+  },
+  {
+    "id": "@astrojs/check",
+    "link": "https://www.npmjs.com/wutongyuonce/@astrojs/check",
+    "desc": "Astro's official check tool",
+    "icon": "i-carbon-settings-check",
+    "category": "Backend"
+  },
+  {
+    "id": "XingClaw(miniopenclaw)",
+    "link": "https://github.com/wutongyuonce/XingClaw",
+    "desc": "Astro's integration with markdown using Remark",
+    "icon": "i-carbon:user-feedback",
+    "category": "Agent"
+  }
+
+]
