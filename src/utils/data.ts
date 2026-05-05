@@ -44,7 +44,7 @@ export function getMinutesRead(
  * In production, it filters out draft posts.
  */
 export async function getFilteredPosts(
-  collection: 'blog'
+  collection: 'blogs'
 ) {
   return await getCollection(collection, ({ data }) => {
     return import.meta.env.PROD ? !data.draft : true
@@ -55,7 +55,7 @@ export async function getFilteredPosts(
  * Sorts an array of posts by their publication date in descending order.
  */
 export function getSortedPosts(
-  posts: CollectionEntry<'blog'>[]
+  posts: CollectionEntry<'blogs'>[]
 ) {
   return posts.sort(
     (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
@@ -65,8 +65,8 @@ export function getSortedPosts(
 export interface GroupedBlogItem {
   idx: number
   year: string
-  id: CollectionEntry<'blog'>['id']
-  data: CollectionEntry<'blog'>['data']
+  id: CollectionEntry<'blogs'>['id']
+  data: CollectionEntry<'blogs'>['data']
   minutesRead: number
 }
 
@@ -79,7 +79,7 @@ export interface GroupedBlogYear {
  * Retrieves all blog posts and groups them by publication year in descending order.
  */
 export async function getGroupedPostsByYear(
-  collection: 'blog'
+  collection: 'blogs'
 ): Promise<GroupedBlogYear[]> {
   const items = await getFilteredPosts(collection)
   const sortedPosts = getSortedPosts(items)

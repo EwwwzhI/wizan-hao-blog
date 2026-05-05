@@ -211,9 +211,17 @@ body {
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'WoHuiBaNiJiaoZuoAiQing-2';
+  src: url('/fonts/WoHuiBaNiJiaoZuoAiQing-2.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 .prose h1.page-title {
-  font-family: 'ChenYuluoyan-2.0-Thin', sans-serif;
-  font-size: 3rem;
+  font-family: 'WoHuiBaNiJiaoZuoAiQing-2', sans-serif;
+  font-size: 3.5rem;
   line-height: 1.1;
 }
 

@@ -1,148 +1,98 @@
-# 页面间距修复记录
+# 页面间距与标题调整说明
 
-> 记录本次 `home / blogs / projects` 页面标题区与正文起始位置不一致的问题、定位过程与最终修复方案。
-
----
-
-## 1. 问题现象
-
-页面顶部大标题与子标题下方的内容起始位置不一致：
-
-- `blogs` 页面看起来更紧凑
-- `home` 页面正文离 subtitle 更远
-- `projects` 页面分类标题离 subtitle 也更远
-
-最初容易误以为这是 `StandardLayout` 的统一间距问题，但实际不是。
+> 这份文档只保留两条主线：
+> 1. `StandardLayout` 只控制标题区和正文容器之间的基础间距
+> 2. 真正拉开差距的是“正文里的第一个元素”
 
 ---
 
-## 2. 根因分析
+## 1. `StandardLayout` 只控制标题区和正文容器之间的基础间距
 
-### 2.1 `StandardLayout` 只控制标题区和正文容器之间的基础间距
-
-当前 [StandardLayout.astro](file:///Users/a/Desktop/wutong-yu-blog/wutong-yu/src/layouts/StandardLayout.astro) 中：
+当前 [StandardLayout.astro](file:///Users/a/Desktop/ALL/我的Github项目/wutong-yu-blog/src/layouts/StandardLayout.astro) 中：
 
 ```astro
 <header
   class={`prose mx-auto mb-16${isCentered ? ' text-center' : ''}`}
 >
+  {title && <h1 class="page-title">{title}</h1>}
+  {subtitle && <p class="mt--12! op-50 italic">{subtitle}</p>}
+  <slot name="head" />
+</header>
 ```
 
-这里的 `mb-16` 只负责：
+这里的职责很明确：
 
-- 页面标题
-- 页面副标题
-- 下方正文容器
+- `mb-16` 控制“标题区”和“下方正文容器”之间的基础距离
+- 它影响的是页面整体骨架
+- `home / blogs / projects` 都先共用这一层基础间距
 
-之间的基础间距。
+也就是说：
 
-### 2.2 真正拉开差距的是“正文里的第一个元素”
+- 如果你想改“子标题和下面正文区域”的距离，优先看这里的 `mb-*`
+- 但它并不能决定每个页面首屏看起来是否一样紧凑
 
-三个页面进入正文后的首个可见元素不同，因此视觉间距不同：
+---
 
-#### `blogs`
+## 2. 真正拉开差距的是“正文里的第一个元素”
 
-`blogs` 第一屏最先出现的是年份标题 `Categorizer`。
+虽然三页都共用同一个 `StandardLayout`，但正文开始后的第一个可见元素不同，所以视觉距离不同。
 
-在 [Categorizer.astro](file:///Users/a/Desktop/wutong-yu-blog/wutong-yu/src/components/base/Categorizer.astro) 中，普通版本的标题是：
+### 2.1 `blogs`
+
+`blogs` 页面进入正文后，最先出现的是年份标题 `Categorizer`。
+
+对应代码在 [Categorizer.astro](file:///Users/a/Desktop/ALL/我的Github项目/wutong-yu-blog/src/components/base/Categorizer.astro)：
 
 ```css
 .categorizer__label {
+  position: absolute;
+  left: -3rem;
   top: -2rem;
 }
 ```
 
-也就是年份标签会被向上提，因此视觉上更靠近 subtitle。
+说明：
 
-#### `projects`
+- `blogs` 用的是普通版 `Categorizer`
+- 这里的 `top: -2rem` 会把年份标签向上提
+- 所以它会显得更靠近 subtitle
 
-`projects` 也是 `Categorizer`，但使用的是宽版：
-
-```css
-.categorizer--wide .categorizer__label {
-  top: -1.5rem;
-}
-```
-
-它也会上移，但原先上移量不足，所以看起来比 `blogs` 更远。
-
-#### `home`
-
-`home` 的第一个元素不是 `Categorizer`，而是 Markdown 正文中的首段 `<p>`。
-
-在 [prose.css](file:///Users/a/Desktop/wutong-yu-blog/wutong-yu/src/styles/prose.css) 中：
-
-```css
-.prose p {
-  margin-top: 1.25em;
-}
-```
-
-默认首段会自带顶部外边距，因此首页正文会比 `blogs` 更靠下。
-
----
-
-## 3. 处理思路
-
-目标不是继续修改全局 `StandardLayout`，而是：
-
-- 保持三页共用统一的基础标题间距
-- 再分别处理各自首个元素的额外偏移
-
-也就是：
-
-1. `StandardLayout` 负责公共基础间距
-2. `blogs` 保持现状
-3. `projects` 调整宽版分类标题上移量
-4. `home` 单独上移正文外层容器
-
----
-
-## 4. 最终修改
-
-### 4.1 `StandardLayout` 作为统一基础间距
-
-当前统一使用：
-
-```astro
-<header class={`prose mx-auto mb-16${isCentered ? ' text-center' : ''}`}>
-```
-
-作用：
-
-- 所有使用 `StandardLayout` 的页面先共享一套基础标题区间距
-
-### 4.2 `blogs` 页面不额外加首组上边距
-
-当前 [ListView.astro](file:///Users/a/Desktop/wutong-yu-blog/wutong-yu/src/components/views/ListView.astro) 保持：
+另外，[ListView.astro](file:///Users/a/Desktop/ALL/我的Github项目/wutong-yu-blog/src/components/views/ListView.astro) 中第一组列表外层当前是：
 
 ```astro
 <section data-year={group.year} class="mb-16">
 ```
 
-说明：
+这个值控制的是：
 
-- 不再额外给第一组年份块增加 `mt-*`
-- 让 `blogs` 的顶部距离主要由 `StandardLayout + Categorizer 自身上移` 决定
+- 当前这一整组年份区块下面留多少空白
+- 也就是它和下一组内容之间的垂直距离
 
-### 4.3 `projects` 页面上移宽版分类标题
+### 2.2 `projects`
 
-在 [Categorizer.astro](file:///Users/a/Desktop/wutong-yu-blog/wutong-yu/src/components/base/Categorizer.astro) 中，将宽版分类标题调整为：
+`projects` 页面进入正文后，最先出现的也是 `Categorizer`，但使用的是宽版。
+
+对应代码仍在 [Categorizer.astro](file:///Users/a/Desktop/ALL/我的Github项目/wutong-yu-blog/src/components/base/Categorizer.astro)：
 
 ```css
 .categorizer--wide .categorizer__label {
   top: -1.5rem;
+  left: var(--wide-left);
+  font-size: 5em;
 }
 ```
 
-作用：
+说明：
 
-- 让 `projects` 页分类标题更靠近 subtitle
-- 视觉上向 `blogs` 页面看齐
+- `projects` 用的是宽版 `Categorizer`
+- 它和 `blogs` 一样，也是通过首个标题元素自身的上移来影响顶部观感
+- 它最终离 subtitle 多近，主要看这里的 `top`
 
-### 4.4 `home` 页面单独上移正文
+### 2.3 `home`
 
-在 [index.mdx](file:///Users/a/Desktop/wutong-yu-blog/wutong-yu/src/pages/index.mdx) 中，首页正文包了一层：
+`home` 页面进入正文后，第一个元素不是 `Categorizer`，而是首页正文容器。
+
+对应代码在 [index.mdx](file:///Users/a/Desktop/ALL/我的Github项目/wutong-yu-blog/src/pages/index.mdx)：
 
 ```mdx
 <div slot="article" class="home-content" style="margin-top: -1em;">
@@ -150,49 +100,115 @@
 </div>
 ```
 
-作用：
+同时，正文段落的默认样式在 [prose.css](file:///Users/a/Desktop/ALL/我的Github项目/wutong-yu-blog/src/styles/prose.css)：
 
-- 只影响首页
-- 让首页正文整体向上靠近 subtitle
-- 不影响 `blogs` 和 `projects`
+```css
+.prose p {
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+}
+```
 
----
+说明：
 
-## 5. 当前结果
-
-调整后：
-
-- `blogs`：作为目标参考页，保持当前视觉关系
-- `projects`：分类标题更接近 subtitle
-- `home`：首段正文明显上移，更接近 `blogs`
-
-目前三页仍不是像素级完全一致，因为首个可见元素本身不同：
-
-- `blogs` 首元素是绝对定位的大年份标签
-- `projects` 首元素是宽版大分类标签
-- `home` 首元素是正文段落
-
-但现在已经达到“视觉上更统一”的效果。
+- `home` 的首屏观感主要由首页正文外层的 `margin-top: -1em` 决定
+- 如果没有这层外包，正文首段会受到 `.prose p` 默认外边距影响，看起来更靠下
 
 ---
 
-## 6. 涉及文件
+## 3. 这份文档关注的是哪一段间距
 
-- [StandardLayout.astro](file:///Users/a/Desktop/wutong-yu-blog/wutong-yu/src/layouts/StandardLayout.astro)
-- [ListView.astro](file:///Users/a/Desktop/wutong-yu-blog/wutong-yu/src/components/views/ListView.astro)
-- [Categorizer.astro](file:///Users/a/Desktop/wutong-yu-blog/wutong-yu/src/components/base/Categorizer.astro)
-- [index.mdx](file:///Users/a/Desktop/wutong-yu-blog/wutong-yu/src/pages/index.mdx)
-- [prose.css](file:///Users/a/Desktop/wutong-yu-blog/wutong-yu/src/styles/prose.css)
+上面两条主线讲的是：
+
+- 标题区域和正文区域之间的距离
+- 以及正文开始后的第一个元素，怎样影响首屏观感
+
+也就是：
+
+- `StandardLayout` 决定“标题区”和“正文容器”的基础距离
+- 各页面第一个元素决定“正文第一屏看起来离 subtitle 还有多远”
 
 ---
 
-## 7. 后续可选优化
+## 4. 如何改大标题和小标题之间的间距
 
-如果后续想做成更彻底的统一方案，可以继续往下收敛：
+要改“大标题”和“小标题”之间的距离，主要看 [StandardLayout.astro](file:///Users/a/Desktop/ALL/我的Github项目/wutong-yu-blog/src/layouts/StandardLayout.astro) 里 subtitle 这一行：
 
-1. 给 `StandardLayout` 增加页面级的 `contentOffset` 属性
-2. 让 `home / blogs / projects` 都通过统一参数控制正文起始位置
-3. 避免在页面入口里写行内 `style`
-4. 为 `Categorizer` 增加普通版和宽版的统一 offset 配置
+```astro
+{subtitle && <p class="mt--12! op-50 italic">{subtitle}</p>}
+```
 
-这样后续调整页面顶部间距时，就不需要再分别改多个文件。
+这里的关键是 `mt--12!`：
+
+- 更负一点，例如 `mt--16!`，标题和副标题会更近
+- 负值变小，例如 `mt--8!`，标题和副标题会更远
+- 改成 `mt-0`，两者间距会明显拉开
+
+示例：
+
+```astro
+{subtitle && <p class="mt--16! op-50 italic">{subtitle}</p>}
+```
+
+---
+
+## 5. 如何改大标题字体大小
+
+首页和标准页面的大标题在 [StandardLayout.astro](file:///Users/a/Desktop/ALL/我的Github项目/wutong-yu-blog/src/layouts/StandardLayout.astro) 中是：
+
+```astro
+{title && <h1 class="page-title">{title}</h1>}
+```
+
+如果要改大标题字号，建议在 [main.css](file:///Users/a/Desktop/ALL/我的Github项目/wutong-yu-blog/src/styles/main.css) 中写更具体的选择器：
+
+```css
+.prose h1.page-title {
+  font-size: 3rem;
+  line-height: 1.1;
+}
+```
+
+常用参考：
+
+- `2.5rem`：略微变大
+- `3rem`：明显变大
+- `3.5rem`：更强调视觉重点
+
+---
+
+## 6. 如何改小标题字体大小
+
+这里的小标题指页面顶部的 subtitle，也就是 [StandardLayout.astro](file:///Users/a/Desktop/ALL/我的Github项目/wutong-yu-blog/src/layouts/StandardLayout.astro) 里的这行：
+
+```astro
+{subtitle && <p class="mt--12! op-50 italic">{subtitle}</p>}
+```
+
+要改它的字号，建议给它单独加一个类，例如：
+
+```astro
+{subtitle && <p class="page-subtitle mt--12! op-50 italic">{subtitle}</p>}
+```
+
+然后在 [main.css](file:///Users/a/Desktop/ALL/我的Github项目/wutong-yu-blog/src/styles/main.css) 中写：
+
+```css
+.page-subtitle {
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+```
+
+如果你暂时不想改结构，也可以直接在 `StandardLayout.astro` 里给这个 `p` 写内联类或局部样式，但长期看还是单独类名更清晰。
+
+---
+
+## 7. 相关文件
+
+- [StandardLayout.astro](file:///Users/a/Desktop/ALL/我的Github项目/wutong-yu-blog/src/layouts/StandardLayout.astro)
+- [Categorizer.astro](file:///Users/a/Desktop/ALL/我的Github项目/wutong-yu-blog/src/components/base/Categorizer.astro)
+- [ListView.astro](file:///Users/a/Desktop/ALL/我的Github项目/wutong-yu-blog/src/components/views/ListView.astro)
+- [index.mdx](file:///Users/a/Desktop/ALL/我的Github项目/wutong-yu-blog/src/pages/index.mdx)
+- [prose.css](file:///Users/a/Desktop/ALL/我的Github项目/wutong-yu-blog/src/styles/prose.css)
+- [main.css](file:///Users/a/Desktop/ALL/我的Github项目/wutong-yu-blog/src/styles/main.css)

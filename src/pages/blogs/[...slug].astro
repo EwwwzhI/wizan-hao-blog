@@ -1,17 +1,33 @@
 ---
+// 导入组件：用于渲染文章内容的 React/Vue 组件
 import RenderPost from '~/components/views/RenderPost.astro'
+
+// 导入工具函数：获取过滤后的文章列表
 import { getFilteredPosts } from '~/utils/data'
 
+// 【静态路径生成函数】
+// Astro 会在构建时执行这个函数，生成所有静态页面
 export async function getStaticPaths() {
-  const posts = await getFilteredPosts('blog')
+  // 获取类型为 'blogs' 的所有文章数据
+  const posts = await getFilteredPosts('blogs')
 
+  // 将每篇文章映射成一个路由路径和 props
+  // 返回的格式：{ params: { slug: 'xxx' }, props: { post: {...} } }
   return posts.map((post) => ({
-    params: { slug: post.id },
-    props: { post },
+    params: { slug: post.id },   // params: 决定 URL，如 /blogs/hello-world
+    props: { post },              // props: 传递给页面组件的数据
   }))
 }
 
+// 【页面组件接收的数据】
+// Astro.props 包含了上面 getStaticPaths 返回的 props
+// 这里解构出 post 对象
 const { post } = Astro.props
 ---
 
+<!--
+  渲染这篇文章
+  {post} 是简写语法，等价于 post={post}
+  将 post 数据传递给 RenderPost 组件进行渲染
+-->
 <RenderPost {post} />

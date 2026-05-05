@@ -1,7 +1,7 @@
 import type { Site, Ui, Features } from './types'
 
 export const SITE: Site = {
-  website: 'https://wutong-yu.site/',
+  website: 'https://wutongyu.site/',
   base: '/',
   title: 'Wutong Yu',
   description:
@@ -101,7 +101,7 @@ export const FEATURES: Features = {
   search: [
     true,
     {
-      includes: ['blog'],
+      includes: ['blogs'],
       filter: false,
       navHighlight: true,
       batchLoadSize: [true, 5],
