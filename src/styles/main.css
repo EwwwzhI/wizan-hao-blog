@@ -3,6 +3,7 @@
   --c-scrollbar: #ddd;
   --c-scrollbar-hover: #bbb;
   --c-text: #000;
+  --blog-reading-size: 1.0625rem;
 }
 
 :root.dark {
@@ -200,6 +201,20 @@ body {
   to {
     opacity: 0;
   }
+}
+
+@font-face {
+  font-family: 'ChenYuluoyan-2.0-Thin';
+  src: url('/fonts/ChenYuluoyan-2.0-Thin.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.prose h1.page-title {
+  font-family: 'ChenYuluoyan-2.0-Thin', sans-serif;
+  font-size: 3rem;
+  line-height: 1.1;
 }
 
 .fade-in {

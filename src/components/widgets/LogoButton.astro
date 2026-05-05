@@ -11,7 +11,18 @@ import { SITE } from '~/config'
   aria-current={Astro.url.pathname === `${withBasePath('/')}` ? 'page' : false}
 >
   <div class="logo-container">
-    <span class="logo-text">WutongYu</span>
+    <img
+      class="logo-icon img-light"
+      src={withBasePath('/cat-icon-2.svg')}
+      alt=""
+      aria-hidden="true"
+    />
+    <img
+      class="logo-icon img-dark"
+      src={withBasePath('/cat-icon.svg')}
+      alt=""
+      aria-hidden="true"
+    />
   </div>
 </Link>
 
@@ -20,8 +31,6 @@ import { SITE } from '~/config'
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 0.8rem;
-
     transform: scale(1.05);
   }
 
@@ -34,14 +43,22 @@ import { SITE } from '~/config'
     }
   }
 
-  .logo-text {
-    font-family: 'Great Vibes', cursive;
-    font-size: 1.65rem;
-    line-height: 1;
-    color: var(--c-text);
+  .logo-icon {
+    width: 3rem;
+    height: 3rem;
+    display: block;
+    object-fit: cover;
   }
 
-  :global(.dark) .logo-text {
-    color: #fdfdfd;
+  .img-dark {
+    display: none;
+  }
+
+  :global(html.dark) .img-light {
+    display: none;
+  }
+
+  :global(html.dark) .img-dark {
+    display: block;
   }
 </style>

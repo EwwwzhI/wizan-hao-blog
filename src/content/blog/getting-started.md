@@ -1,7 +1,7 @@
 ---
 title: Getting Started
 description: A quick walkthrough of the streamlined Wutong Yu Astro site
-pubDate: 2026-5-03
+pubDate: 2026-05-01
 lastModDate: ''
 ogImage: true
 toc: true
