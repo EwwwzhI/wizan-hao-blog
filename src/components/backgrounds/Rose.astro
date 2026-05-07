@@ -40,7 +40,7 @@ const roses = [
 
 <div
   id="bg-rose"
-  class="z--1 fixed top-0 bottom-0 left-0 right-0
+  class="hidden sm:block z--1 fixed top-0 bottom-0 left-0 right-0
     w-full h-full
     op-50 dark:op-100
     pointer-events-none
@@ -90,6 +90,8 @@ const roses = [
     }
 
     connectedCallback() {
+      if (window.matchMedia('(max-width: 639.9px)').matches) return
+
       // ensure CSS transitions trigger properly on client-side navigation
       requestAnimationFrame(() => {
         this.#animate()
