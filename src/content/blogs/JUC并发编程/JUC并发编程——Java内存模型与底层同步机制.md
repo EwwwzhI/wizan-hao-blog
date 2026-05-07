@@ -8,6 +8,8 @@ toc: true
 search: true
 ---
 
+[【跳转到上一篇：JUC并发编程——多线程基础】](/blogs/juc并发编程/juc并发编程多线程基础/)
+
 ## 六、Java 内存模型（Java Memory Model，JMM）
 
 ![jmm-20230823200720](/juc-img/jmm-20230823200720.png)

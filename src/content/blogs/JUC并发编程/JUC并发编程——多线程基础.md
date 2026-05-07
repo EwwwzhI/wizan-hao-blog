@@ -8,7 +8,7 @@ toc: true
 search: true
 ---
 
-[跳转到下一篇：JUC并发编程——Java内存模型与底层同步机制](/blogs/juc并发编程/juc并发编程java内存模型与底层同步机制/)
+[【跳转到下一篇：JUC并发编程——Java内存模型与底层同步机制】](/blogs/juc并发编程/juc并发编程java内存模型与底层同步机制/)
 
 ## 一、基础
 
