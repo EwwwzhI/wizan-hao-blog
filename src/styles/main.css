@@ -221,6 +221,7 @@ body {
 
 .prose h1.page-title {
   font-family: 'WoHuiBaNiJiaoZuoAiQing-2', sans-serif;
+  font-weight: 400;
   font-size: 3.5rem;
   line-height: 1.1;
 }

@@ -12,9 +12,9 @@ I'm also looking for an *INTERN* opportunity regarding *backend/agent engineerin
 
 <br>
 
-You can see ***[all my blogs list here](https://wutong-yu.site/blogs/) (tech stack notes and random blogs)***.
+You can see ***[all my blogs list here](https://wutongyu.site/blogs/) (tech stack notes and random blogs)***.
 
-You can see ***[all my projects list here](https://wutong-yu.site/projects/)***.
+You can see ***[all my projects list here](https://wutongyu.site/projects/)***.
 
 <br>
 
@@ -29,7 +29,7 @@ I have got a *7.5* score in *IELTS*, so if you are a native speaker, feel free t
 <p>
   <span class="inline-block mr-1.5 mb-2">Find me on</span>
   <span class="inline-flex flex-wrap gap-2 op-75">
-    <a href="https://github.com/lin-stephanie/astro-antfustyle-theme">
+    <a href="https://github.com/wutongyuonce">
       <span i-simple-icons-github></span> GitHub</a>
     <a href="https://www.instagram.com/wutongyu0730">
       <span i-simple-icons-instagram></span> Instagram</a>
