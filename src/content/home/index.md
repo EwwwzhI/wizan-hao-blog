@@ -1,4 +1,4 @@
-Hello! I'm ***WutongYu***. This is my personal website, which is inspired by *[lin-stephanie](https://github.com/lin-stephanie)‘s [astro-antfustyle-theme](https://github.com/lin-stephanie/astro-antfustyle-theme)*. Detailed documentation is placed under the 'doc' folder in the root directiory of the project.
+Hello! I'm ***WutongYu***. This is my personal website, which is inspired by *[lin-stephanie](https://github.com/lin-stephanie)‘s [astro-antfustyle-theme](https://github.com/lin-stephanie/astro-antfustyle-theme)*. Detailed documentation is placed under the '/doc' folder in the root directiory of the project.
 
 I'm an IoT student at :link[Hohai University]{id=https://www.hhu.edu.cn .square}. Recently i'm applying for *Msc(cs)* at :link[HKU]{id=https://www.hku.hk .square} / :link[CUHK]{id=https://www.cuhk.edu.hk img=/cuhk.png .square} / :link[HKUST]{id=https://hkust.edu.hk .square}.
 
