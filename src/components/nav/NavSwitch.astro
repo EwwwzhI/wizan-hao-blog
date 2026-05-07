@@ -32,13 +32,30 @@
   import { toggleFadeEffect } from '~/utils/misc'
 
   document.addEventListener('astro:page-load', () => {
+    const navOpenButton = document.getElementById('nav-open-button')
+    const navPanel = document.getElementById('nav-panel')
+
+    const syncExpanded = () => {
+      if (!navOpenButton || !navPanel) return
+      navOpenButton.setAttribute(
+        'aria-expanded',
+        String(!navPanel.classList.contains('hidden!'))
+      )
+    }
+
     /* Open nav panel when user click on button */
     const handleBtnClickToOpen = () => {
       toggleFadeEffect('backdrop', true, 'hidden')
       toggleFadeEffect('nav-panel', true, 'hidden!')
+      syncExpanded()
     }
 
-    const navOpenButton = document.getElementById('nav-open-button')
+    if (navPanel) {
+      const observer = new MutationObserver(syncExpanded)
+      observer.observe(navPanel, { attributes: true, attributeFilter: ['class'] })
+      syncExpanded()
+    }
+
     navOpenButton?.addEventListener('click', handleBtnClickToOpen)
   })
 </script>

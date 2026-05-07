@@ -92,7 +92,7 @@ Here's a link to [google](https://www.google.com/) and to a [section heading in 
 To link to another blog post in this project, use the final page route instead of the source file path.
 
 - Same level posts under `src/content/blogs/`:
-  - [My Mac Setup](/blogs/我的Mac配置清单/)
+  - [My Mac Setup](/blogs/我的mac配置清单/)
   - [My vibe coding workflow](/blogs/我的vibe coding流程/)
 - Nested posts under a subfolder:
   - [JUC multithreading basics](/blogs/JUC并发编程/JUC并发编程——多线程基础/)

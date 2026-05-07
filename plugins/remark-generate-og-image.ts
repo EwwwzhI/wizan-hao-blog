@@ -11,9 +11,27 @@ import { getCurrentFormattedTime } from '../src/utils/datetime'
 import { ogImageMarkup } from './og-template/markup'
 import { FEATURES } from '../src/config'
 
+import type { Root } from 'mdast'
 import type { SatoriOptions } from 'satori'
 import type { html } from 'satori-html'
+import type { VFile } from 'vfile'
 import type { BgType } from '../src/types'
+
+interface OgImageFrontmatter {
+  draft?: boolean
+  redirect?: string
+  title?: string
+  ogImage?: string | boolean
+  bgType?: BgType | false
+}
+
+type AstroOgImageFile = VFile & {
+  data: VFile['data'] & {
+    astro: {
+      frontmatter: OgImageFrontmatter
+    }
+  }
+}
 
 const Inter = readFileSync('plugins/og-template/Inter-Regular-24pt.ttf')
 
@@ -112,9 +130,9 @@ function remarkGenerateOgImage() {
 
   const { authorOrBrand, fallbackTitle, fallbackBgType } = ogImage[1]
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-expect-error
-  return async (_tree, file) => {
+  return async (_tree: Root, file: VFile) => {
+    const astroFile = file as AstroOgImageFile
+
     // regenerate fallback
     if (!checkFileExistsInDir('public/og-images', 'og-image.png')) {
       await generateOgImage(
@@ -126,50 +144,54 @@ function remarkGenerateOgImage() {
     }
 
     // check filename
-    const filename = file.basename
+    const filename = astroFile.basename
     if (!filename || !(filename.endsWith('.md') || filename.endsWith('.mdx')))
       return
 
     // check draft & redirect
-    const draft = file.data.astro.frontmatter.draft
-    const redirect = file.data.astro.frontmatter.redirect
+    const draft = astroFile.data.astro.frontmatter.draft
+    const redirect = astroFile.data.astro.frontmatter.redirect
     if (draft || redirect) return
 
     // check if it need to be skipped
-    const title = file.data.astro.frontmatter.title
+    const title = astroFile.data.astro.frontmatter.title
     if (!title || !title.trim().length) return
-    const ogImage = file.data.astro.frontmatter.ogImage
+    const ogImage = astroFile.data.astro.frontmatter.ogImage
     if (ogImage === false) return
+    const customOgImage =
+      typeof ogImage === 'string' && ogImage.trim().length > 0 ? ogImage : undefined
 
     // check if it has been generated
-    const extname = file.extname
-    const dirpath = file.dirname
+    const extname = astroFile.extname
+    const dirpath = astroFile.dirname
     let nameWithoutExt = basename(filename, extname)
-    if (nameWithoutExt === 'index') nameWithoutExt = basename(dirpath)
+    if (nameWithoutExt === 'index') {
+      const dirBaseName = dirpath ? basename(dirpath) : ''
+      nameWithoutExt =
+        dirBaseName && dirBaseName !== 'pages' ? dirBaseName : 'index'
+    }
     if (checkFileExistsInDir('public/og-images', `${nameWithoutExt}.png`))
       return
 
     // check if it has been assigned & actually exists
     if (
-      ogImage &&
-      ogImage !== true &&
-      checkFileExistsInDir('public/og-images', basename(ogImage))
+      customOgImage &&
+      checkFileExistsInDir('public/og-images', basename(customOgImage))
     )
       return
 
     if (
-      ogImage &&
-      ogImage !== true &&
-      !checkFileExistsInDir('public/og-images', basename(ogImage))
+      customOgImage &&
+      !checkFileExistsInDir('public/og-images', basename(customOgImage))
     ) {
       console.warn(
-        `${chalk.black(getCurrentFormattedTime())} ${chalk.yellow(`[WARN] The '${ogImage}' specified in '${file.path}' was not found.`)}\n  ${chalk.bold('Hint:')} Put the file under ${chalk.cyan('public/og-images/')} or set ${chalk.cyan('ogImage: true')} to auto-generate it.`
+        `${chalk.black(getCurrentFormattedTime())} ${chalk.yellow(`[WARN] The '${customOgImage}' specified in '${astroFile.path}' was not found.`)}\n  ${chalk.bold('Hint:')} Put the file under ${chalk.cyan('public/og-images/')} or set ${chalk.cyan('ogImage: true')} to auto-generate it.`
       )
       return
     }
 
     // get bgType
-    const pageBgType = file.data.astro.frontmatter.bgType
+    const pageBgType = astroFile.data.astro.frontmatter.bgType
     const bgType = pageBgType || fallbackBgType
 
     // generate og images

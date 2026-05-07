@@ -160,9 +160,9 @@ const maxItems = parseTuple(maxItemsPerPage, 'maxItemsPerPage')
 <script>
   import { toggleFadeEffect } from '~/utils/misc'
 
-  /* Handle click on search switch to open or close */
+  /* Open the search panel when the search switch is clicked. */
   document.addEventListener('astro:page-load', () => {
-    const handleToggle = () => {
+    const handleOpen = () => {
       toggleFadeEffect('backdrop', true, 'hidden')
       toggleFadeEffect('search-panel', true, 'hidden')
 
@@ -174,7 +174,7 @@ const maxItems = parseTuple(maxItemsPerPage, 'maxItemsPerPage')
     }
 
     const searchSwitch = document.getElementById('search-switch')
-    searchSwitch?.addEventListener('click', handleToggle)
+    searchSwitch?.addEventListener('click', handleOpen)
   })
 </script>
 

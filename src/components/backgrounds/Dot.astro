@@ -5,85 +5,141 @@
 <bg-dot
   class="z--1 fixed top-0 bottom-0 left-0 right-0 pointer-events-none print:hidden"
 >
+  <canvas class="h-full w-full"></canvas>
 </bg-dot>
 
 <script>
-  import p5 from 'p5'
-  import type { default as P5Instance } from 'p5'
-
   class BgDotElement extends HTMLElement {
-    p5Instance: P5Instance | null = null
+    canvas: HTMLCanvasElement | null = null
+    ctx: CanvasRenderingContext2D | null = null
+    rafId: number | null = null
+    lastFrameAt = 0
+    points: { x: number; y: number; opacity: number }[] = []
+    cleanupResize: (() => void) | null = null
+
+    static readonly SCALE = 200
+    static readonly LENGTH = 10
+    static readonly SPACING = 15
+    static readonly FPS = 10
 
     connectedCallback() {
-      const sketch = (p: P5Instance) => {
-        const SCALE = 200
-        const LENGTH = 10
-        const SPACING = 15
+      this.canvas = this.querySelector('canvas')
+      this.ctx = this.canvas?.getContext('2d') ?? null
+      if (!this.canvas || !this.ctx) return
 
-        const width = window.innerWidth
-        const height = window.innerHeight
-
-        const existingPoints = new Set()
-        const points: { x: number; y: number; opacity: number }[] = []
-
-        function getForceOnPoint(x: number, y: number, z: number) {
-          return (p.noise(x / SCALE, y / SCALE, z) - 0.5) * 2 * p.TWO_PI
-        }
-
-        function getLength(x: number, y: number, t: number) {
-          return (p.noise(x / SCALE, y / SCALE, t * 2) + 0.5) * LENGTH
-        }
-
-        function addPoints() {
-          for (let x = -SPACING / 2; x < width + SPACING; x += SPACING) {
-            for (let y = -SPACING / 2; y < height + SPACING; y += SPACING) {
-              const id = `${x}-${y}`
-              if (existingPoints.has(id)) continue
-              existingPoints.add(id)
-              points.push({ x, y, opacity: Math.random() * 0.5 + 0.5 })
-            }
-          }
-        }
-
-        p.setup = () => {
-          p.createCanvas(width, height)
-          p.frameRate(10)
-          addPoints()
-        }
-
-        p.draw = () => {
-          p.clear()
-
-          const t = +new Date() / 10000
-          for (const point of points) {
-            const { x, y } = point
-            const rad = getForceOnPoint(x, y, t)
-            const length = getLength(x, y, t)
-            const nx = x + p.cos(rad) * length
-            const ny = y + p.sin(rad) * length
-
-            const isDark = document.documentElement.classList.contains('dark')
-            const color = isDark ? 55 : 200
-            p.stroke(
-              color,
-              color,
-              color,
-              (Math.abs(p.cos(rad)) * 0.8 + 0.2) * point.opacity * 255
-            )
-            p.strokeWeight(2)
-            p.point(nx, ny)
-          }
-        }
+      const resize = () => {
+        this.resizeCanvas()
+        this.rebuildPoints()
+        this.draw(performance.now())
       }
 
-      this.p5Instance = new p5(sketch, this)
+      window.addEventListener('resize', resize)
+      this.cleanupResize = () => window.removeEventListener('resize', resize)
+
+      resize()
+      this.tick(performance.now())
     }
 
     disconnectedCallback() {
-      if (this.p5Instance) {
-        this.p5Instance.remove()
-        this.p5Instance = null
+      if (this.rafId !== null) cancelAnimationFrame(this.rafId)
+      this.rafId = null
+      this.cleanupResize?.()
+      this.cleanupResize = null
+      this.ctx = null
+      this.canvas = null
+      this.points = []
+    }
+
+    resizeCanvas() {
+      if (!this.canvas || !this.ctx) return
+
+      const width = window.innerWidth
+      const height = window.innerHeight
+      const dpr = Math.min(window.devicePixelRatio || 1, 2)
+
+      this.canvas.width = Math.floor(width * dpr)
+      this.canvas.height = Math.floor(height * dpr)
+      this.canvas.style.width = `${width}px`
+      this.canvas.style.height = `${height}px`
+      this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+    }
+
+    rebuildPoints() {
+      const width = window.innerWidth
+      const height = window.innerHeight
+      const points: { x: number; y: number; opacity: number }[] = []
+
+      for (
+        let x = -BgDotElement.SPACING / 2;
+        x < width + BgDotElement.SPACING;
+        x += BgDotElement.SPACING
+      ) {
+        for (
+          let y = -BgDotElement.SPACING / 2;
+          y < height + BgDotElement.SPACING;
+          y += BgDotElement.SPACING
+        ) {
+          points.push({ x, y, opacity: Math.random() * 0.5 + 0.5 })
+        }
       }
+
+      this.points = points
+    }
+
+    getForceOnPoint(x: number, y: number, t: number) {
+      const value =
+        Math.sin(x / BgDotElement.SCALE + t) +
+        Math.cos(y / BgDotElement.SCALE - t * 1.15) +
+        Math.sin((x + y) / BgDotElement.SCALE / 2 + t * 0.75)
+
+      return ((value + 3) / 6) * Math.PI * 2
+    }
+
+    getLength(x: number, y: number, t: number) {
+      const value =
+        Math.sin(x / BgDotElement.SCALE * 0.8 - t * 1.25) +
+        Math.cos(y / BgDotElement.SCALE * 0.9 + t) +
+        2
+
+      return (value / 4 + 0.5) * BgDotElement.LENGTH
+    }
+
+    draw(now: number) {
+      if (!this.canvas || !this.ctx) return
+
+      const width = window.innerWidth
+      const height = window.innerHeight
+      const t = now / 10000
+      const isDark = document.documentElement.classList.contains('dark')
+      const color = isDark ? 55 : 200
+
+      this.ctx.clearRect(0, 0, width, height)
+      this.ctx.lineWidth = 2
+      this.ctx.lineCap = 'round'
+
+      for (const point of this.points) {
+        const { x, y } = point
+        const rad = this.getForceOnPoint(x, y, t)
+        const length = this.getLength(x, y, t)
+        const nx = x + Math.cos(rad) * length
+        const ny = y + Math.sin(rad) * length
+        const alpha = (Math.abs(Math.cos(rad)) * 0.8 + 0.2) * point.opacity
+
+        this.ctx.strokeStyle = `rgba(${color}, ${color}, ${color}, ${alpha})`
+        this.ctx.beginPath()
+        this.ctx.moveTo(nx, ny)
+        this.ctx.lineTo(nx + 0.01, ny + 0.01)
+        this.ctx.stroke()
+      }
+    }
+
+    tick = (now: number) => {
+      if (now - this.lastFrameAt >= 1000 / BgDotElement.FPS) {
+        this.draw(now)
+        this.lastFrameAt = now
+      }
+
+      this.rafId = requestAnimationFrame(this.tick)
     }
   }
 

@@ -41,7 +41,10 @@ const { minHeadingLevel, maxHeadingLevel } = toc[1]
       this.#minH = this.#getHeadingLevel(this.dataset.minH)
       this.#maxH = this.#getHeadingLevel(this.dataset.maxH)
 
-      const tocLinks = this.#getElements('a', false) as HTMLAnchorElement[]
+      const tocLinks = this.#getElements(
+        '[data-toc-link]',
+        false
+      ) as HTMLAnchorElement[]
       this.#generateHeadingMapToc(tocLinks)
 
       const headings =
@@ -90,7 +93,9 @@ const { minHeadingLevel, maxHeadingLevel } = toc[1]
 
       for (const tocLinkEl of newLinks) {
         tocLinkEl.setAttribute('aria-current', 'true')
-        tocLinkEl.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        if (this.#isVisible(tocLinkEl)) {
+          tocLinkEl.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        }
       }
 
       this.#currentActiveHeading = targetHeading
@@ -104,6 +109,15 @@ const { minHeadingLevel, maxHeadingLevel } = toc[1]
       fromDocument
         ? Array.from(document.querySelectorAll(selector))
         : Array.from(this.querySelectorAll(selector))
+
+    #isVisible = (el: HTMLElement) => {
+      const style = window.getComputedStyle(el)
+      return (
+        style.display !== 'none' &&
+        style.visibility !== 'hidden' &&
+        el.getClientRects().length > 0
+      )
+    }
 
     #generateHeadingMapToc = (tocLinks: HTMLAnchorElement[]) => {
       for (const link of tocLinks) {
@@ -154,5 +168,7 @@ const { minHeadingLevel, maxHeadingLevel } = toc[1]
     }
   }
 
-  customElements.define('table-of-contents', Toc)
+  if (!customElements.get('table-of-contents')) {
+    customElements.define('table-of-contents', Toc)
+  }
 </script>

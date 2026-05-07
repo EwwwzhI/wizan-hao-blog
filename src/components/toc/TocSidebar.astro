@@ -14,8 +14,7 @@ const { headings } = Astro.props
 
 const { toc } = FEATURES
 if (!toc || (Array.isArray(toc) && !toc[0])) return
-const { minHeadingLevel, maxHeadingLevel, displayPosition, displayMode } =
-  toc[1]
+const { minHeadingLevel, maxHeadingLevel, displayMode } = toc[1]
 const specHeadings = generateToc(headings, minHeadingLevel, maxHeadingLevel)
 ---
 
@@ -23,14 +22,13 @@ const specHeadings = generateToc(headings, minHeadingLevel, maxHeadingLevel)
   id="toc-sidebar"
   class="desktop-toc"
   aria-label="Table of contents"
-  data-position={displayPosition}
   data-display-mode={displayMode}
 >
   <Link href="#skip-toc" class="sr-only focus:(not-sr-only fixed start-1 top-1.5 op-20)">
     Skip toc
   </Link>
   <ul class="desktop-toc__list">
-    {!!specHeadings.length && specHeadings.map((heading) => <TocItem {heading} />)}
+    {specHeadings.map((heading) => <TocItem {heading} />)}
   </ul>
   <div id="skip-toc" class="hidden"></div>
 </nav>
@@ -39,10 +37,10 @@ const specHeadings = generateToc(headings, minHeadingLevel, maxHeadingLevel)
   .desktop-toc {
     display: flex;
     flex-direction: column;
-    width: 15.625rem;
+    width: var(--desktop-toc-width, 12rem);
     max-height: 74vh;
     overflow: hidden;
-    font-size: var(--blog-reading-size);
+    font-size: calc(var(--blog-reading-size) * 0.9);
     opacity: 0;
     transition: opacity 0.7s ease-in-out;
   }

@@ -3,7 +3,7 @@ title: 我的 Mac 配置清单
 description: My personal configuration list for Mac, including applications/settings/shortcut keys/trackpad gestures/terminal/environment for developers
 pubDate: 2026-05-04
 lastModDate: ''
-ogImage: true
+ogImage: false
 toc: true
 search: true
 ---
@@ -1285,7 +1285,7 @@ dock栏双指点击图标-退出，点击竖线可以控制大小、进行配置
 
 打开终端，输入以下命令：
 
-```Bash
+```bash
 sudo nvram BootPreference=%00
 ```
 
@@ -1293,14 +1293,14 @@ sudo nvram BootPreference=%00
 
 这个命令同时也会取消连接电源时自动开机，如果你想单独取消开盖开机和连接电源开机中的某一项，可以把命令最后这两个数字换一下，就像这两个
 
-```Bash
+```bash
 sudo nvram BootPreference=%01
 sudo nvram BootPreference=%02
 ```
 
 数字01是单独取消开盖开机，数字02单独尖连接电源时开机，而数字00则是都取消。 最后如果要恢复默认设置，用这行命令即可
 
-```Bash
+```bash
 sudo nvram -d BootPreference
 ```
 

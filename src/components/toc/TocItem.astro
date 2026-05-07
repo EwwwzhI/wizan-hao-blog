@@ -12,7 +12,11 @@ const { heading } = Astro.props
 
 <li>
   {heading.slug && (
-    <Link href={`#${heading.slug}`} aria-label={`Scroll to ${heading.text}`}>
+    <Link
+      href={`#${heading.slug}`}
+      aria-label={`Scroll to ${heading.text}`}
+      data-toc-link
+    >
       {heading.text}
     </Link>
   )}

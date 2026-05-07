@@ -24,12 +24,13 @@ const pageTitle =
 const pageDescription = description || SITE.description
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
+const generatedOgImageName = basename(Astro.url.pathname) || 'index'
 
 const generatedOgImage = checkFileExistsInDir(
   'public/og-images',
-  `${basename(Astro.url.pathname)}.png`
+  `${generatedOgImageName}.png`
 )
-  ? withBasePath('og-images', `${basename(Astro.url.pathname)}.png`)
+  ? withBasePath('og-images', `${generatedOgImageName}.png`)
   : undefined
 
 const assignedOgImage =

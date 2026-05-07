@@ -1,5 +1,4 @@
 ---
-import Toc from '~/components/toc/Toc.astro'
 import TocSidebar from '~/components/toc/TocSidebar.astro'
 import { FEATURES } from '~/config'
 
@@ -28,19 +27,18 @@ const tocDisplayMode = Array.isArray(toc) && toc[0] && toc[1].displayMode
       >
         TOC
       </button>
-      <Toc isArticle={true}>
-        <TocSidebar headings={headings} />
-      </Toc>
+      <TocSidebar headings={headings} />
     </aside>
   )
 }
 
 <style>
   .desktop-aside {
+    --desktop-toc-width: 12rem;
     position: fixed;
     top: 8.875rem;
     z-index: 100;
-    left: calc(100vw - 15.625rem - 3.2rem);
+    left: calc(100vw - var(--desktop-toc-width) - 3.2rem);
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
@@ -75,7 +73,7 @@ const tocDisplayMode = Array.isArray(toc) && toc[0] && toc[1].displayMode
     opacity: 0.82;
   }
 
-  @media (max-width: 1127.9px) {
+  @media (max-width: 1199.9px) {
     .desktop-aside {
       display: none;
     }

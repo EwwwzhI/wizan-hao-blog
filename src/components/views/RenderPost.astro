@@ -7,6 +7,8 @@ import PostMeta from '~/components/base/PostMeta.astro'
 import Warning from '~/components/base/Warning.astro'
 import DesktopAside from '~/components/base/DesktopAside.astro'
 import PostCover from '~/components/base/PostCover.astro'
+import Toc from '~/components/toc/Toc.astro'
+import MobileTocControl from '~/components/toc/MobileTocControl.astro'
 
 import { getMinutesRead } from '~/utils/data'
 import { FEATURES } from '~/config'
@@ -64,7 +66,12 @@ frontmatter to <code>false</code> or remove it to publish the post.`
     </Fragment>
     <Fragment slot="article">
       {isDraft && <Warning html={WARNING} />}
-      {haveHeadings && <DesktopAside {headings} />}
+      {haveHeadings && (
+        <Toc isArticle={true}>
+          <DesktopAside {headings} />
+          <MobileTocControl {headings} />
+        </Toc>
+      )}
       <PostCover {cover} {coverAlt} />
       <Content />
     </Fragment>

@@ -14,14 +14,102 @@ import rehypeCallouts from 'rehype-callouts'               // 创建提示框/�
 import rehypeKatex from 'rehype-katex'                     // 渲染数学公式（LaTeX → HTML）
 import rehypeExternalLinks from 'rehype-external-links'    // 处理外部链接（新窗口、图标等）
 import rehypeAutolinkHeadings from 'rehype-autolink-headings' // 标题自动添加锚点链接
-// @ts-expect-error(rehype-wrap-all is not typed)
 import rehypeWrapAll from 'rehype-wrap-all'                // 用 div 包裹指定元素
 
 import { UI, FEATURES } from '../src/config'               // 导入项目配置
 
 import type { RemarkPlugins, RehypePlugins } from 'astro'
 import type { PropertiesFromTextDirective } from 'remark-directive-sugar'
-import type { CreateProperties } from 'rehype-external-links'
+import type { Text } from 'mdast'
+import type { Element as HastElement, Properties as HastProperties } from 'hast'
+import type { BuildProperties } from 'rehype-autolink-headings'
+import type { CreateContent, CreateProperties } from 'rehype-external-links'
+
+const linkImgProps: PropertiesFromTextDirective = (node) => {
+  const props: HastProperties = { 'aria-hidden': 'true' }
+
+  if (node.attributes?.class?.includes('github'))
+    props.src = 'https://github.githubassets.com/favicons/favicon.svg'
+
+  return props
+}
+
+const externalLinkContent: CreateContent = (el) => {
+  // 如果没开启新标签页或不需要图标，返回 null
+  if (!UI.externalLink.newTab || !UI.externalLink.showNewTabIcon) return null
+
+  // 检测链接内是否包含图片（避免影响图片链接）
+  let hasImage = false
+  visit(el, 'element', (childNode: HastElement) => {
+    if (childNode.tagName === 'img') {
+      hasImage = true
+      return false
+    }
+  })
+  if (hasImage) return null
+
+  // 返回空文本（实际图标由 CSS 类生成）
+  return { type: 'text', value: '' }
+}
+
+const externalLinkContentProperties: CreateProperties = (el) => {
+  if (!UI.externalLink.newTab || !UI.externalLink.showNewTabIcon) return null
+
+  let hasImage = false
+  visit(el, 'element', (childNode: HastElement) => {
+    if (childNode.tagName === 'img') {
+      hasImage = true
+      return false
+    }
+  })
+  if (hasImage) return null
+
+  return {
+    'u-i-carbon-arrow-up-right': true,  // 使用 Carbon 图标集
+    className: ['new-tab-icon'],        // 添加 CSS 类
+    'aria-hidden': 'true',              // 对屏幕阅读器隐藏
+  }
+}
+
+const externalLinkProperties: CreateProperties = (el) => {
+  const props: HastProperties = {}
+  const href = el.properties.href
+
+  if (!href || typeof href !== 'string') return props
+
+  if (UI.externalLink.newTab) {
+    props.target = '_blank'                    // 新标签页打开
+    props.ariaLabel = 'Open in new tab'        // 无障碍标签
+
+    // 自定义鼠标样式
+    if (
+      UI.externalLink.cursorType.length > 0 &&
+      UI.externalLink.cursorType !== 'pointer'
+    ) {
+      props.className = Array.isArray(el.properties.className)
+        ? [...el.properties.className, 'external-link-cursor']
+        : ['external-link-cursor']
+    }
+  }
+
+  return props
+}
+
+const headingAnchorProperties: BuildProperties = (el) => {
+  // 提取标题文本内容（用于 aria-label）
+  let content = ''
+  visit(el, 'text', (textNode: Text) => {
+    content += textNode.value
+  })
+
+  return {
+    className: ['header-anchor'],
+    tabIndex: 0,                      // 可用键盘导航
+    'aria-hidden': 'false',           // 对屏幕阅读器可见
+    'aria-label': content ? `Link to ${content}` : undefined,
+    'data-pagefind-ignore': '',       // 排除搜索索引
+  }
+}
 
 // ==================== 导出 Remark 插件配置 ====================
 export const remarkPlugins: RemarkPlugins = [
@@ -45,13 +133,7 @@ export const remarkPlugins: RemarkPlugins = [
         // 从 Google 服务获取网站 favicon
         faviconSourceUrl: 'https://icons.duckduckgo.com/ip3/{domain}.ico',
         // 动态设置图片属性
-        imgProps: (node) => {
-          const props = { 'aria-hidden': 'true' }
-          // GitHub 链接使用官方图标
-          if (node.attributes?.class?.includes('github'))
-            props.src = 'https://github.githubassets.com/favicons/favicon.svg'
-          return props
-        },
+        imgProps: linkImgProps,
       },
       // 2.3 图片指令
       image: {
@@ -101,70 +183,13 @@ export const rehypePlugins: RehypePlugins = [
       rel: UI.externalLink.newTab ? 'noopener noreferrer' : [],
 
       // 链接内容处理（添加新标签图标）
-      content: (el) => {
-        // 如果没开启新标签页或不需要图标，返回 null
-        if (!UI.externalLink.newTab || !UI.externalLink.showNewTabIcon)
-          return null
-
-        // 检测链接内是否包含图片（避免影响图片链接）
-        let hasImage = false
-        visit(el, 'element', (childNode) => {
-          if (childNode.tagName === 'img') {
-            hasImage = true
-            return false
-          }
-        })
-        if (hasImage) return null
-
-        // 返回空文本（实际图标由 CSS 类生成）
-        return { type: 'text', value: '' }
-      },
+      content: externalLinkContent,
 
       // 图标元素的属性
-      contentProperties: (el) => {
-        if (!UI.externalLink.newTab || !UI.externalLink.showNewTabIcon)
-          return null
-
-        let hasImage = false
-        visit(el, 'element', (childNode) => {
-          if (childNode.tagName === 'img') {
-            hasImage = true
-            return false
-          }
-        })
-        if (hasImage) return null
-
-        return {
-          'u-i-carbon-arrow-up-right': true,  // 使用 Carbon 图标集
-          'className': ['new-tab-icon'],      // 添加 CSS 类
-          'aria-hidden': 'true',              // 对屏幕阅读器隐藏
-        }
-      },
+      contentProperties: externalLinkContentProperties,
 
       // 链接元素属性
-      properties: (el) => {
-        const props = {}
-        const href = el.properties.href
-
-        if (!href || typeof href !== 'string') return props
-
-        if (UI.externalLink.newTab) {
-          props.target = '_blank'                    // 新标签页打开
-          props.ariaLabel = 'Open in new tab'        // 无障碍标签
-
-          // 自定义鼠标样式
-          if (
-            UI.externalLink.cursorType.length > 0 &&
-            UI.externalLink.cursorType !== 'pointer'
-          ) {
-            props.className = Array.isArray(el.properties.className)
-              ? [...el.properties.className, 'external-link-cursor']
-              : ['external-link-cursor']
-          }
-        }
-
-        return props
-      },
+      properties: externalLinkProperties,
     },
   ],
 
@@ -175,20 +200,7 @@ export const rehypePlugins: RehypePlugins = [
       behavior: 'append',  // 在标题内容后追加链接
 
       // 锚点链接属性
-      properties: (el) => {
-        // 提取标题文本内容（用于 aria-label）
-        let content = ''
-        visit(el, 'text', (textNode) => {
-          content += textNode.value
-        })
-        return {
-          'class': 'header-anchor',
-          'tab-index': 0,                    // 可用键盘导航
-          'aria-hidden': 'false',            // 对屏幕阅读器可见
-          'aria-label': content ? `Link to ${content}` : undefined,
-          'data-pagefind-ignore': '',        // 排除搜索索引
-        }
-      },
+      properties: headingAnchorProperties,
 
       // 锚点内容（# 符号）
       content: {
