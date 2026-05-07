@@ -8,7 +8,7 @@ toc: true
 search: true
 ---
 
-[【跳转到下一篇：JUC并发编程——Java内存模型与底层同步机制】](/blogs/juc并发编程/juc并发编程java内存模型与底层同步机制/)
+[【跳转到下一篇：JUC 并发编程 2—Java 内存模型与底层同步机制】](/blogs/juc并发编程/juc-并发编程-2java-内存模型与底层同步机制/)
 
 ## 一、基础
 
@@ -1234,7 +1234,7 @@ public static void test1();
   public class Test01 {
       static final int THREAD_NUM = 2;
       static final int LOOP_NUM = 200;
-
+  
       public static void main(String[] args) {
           ThreadUnsafe test = new ThreadUnsafe();
           for (int i = 0; i < THREAD_NUM; i++) {
@@ -1244,10 +1244,10 @@ public static void test1();
           }
       }
   }
-
+  
   class ThreadUnsafe {
       ArrayList<String> list = new ArrayList<>();
-
+  
       public void method01(int loopNum) {
           for (int i = 0; i < loopNum; i++) {
               // 临界区，会发生竞态条件
@@ -1255,11 +1255,11 @@ public static void test1();
               method03();
           }
       }
-
+  
       private void method02() {
           list.add("1");
       }
-
+  
       public void method03() {
           list.remove(0);
       }
@@ -1279,7 +1279,7 @@ public static void test1();
 - 下面我们将list修改为局部变量
   ```java
   class ThreadSafe {
-
+  
       public void method01(int loopNum) {
           ArrayList<String> list = new ArrayList<>();
           for (int i = 0; i < loopNum; i++) {
@@ -1288,11 +1288,11 @@ public static void test1();
               method03(list);
           }
       }
-
+  
       private void method02(ArrayList<String> list) {
           list.add("1");
       }
-
+  
       private void method03(ArrayList<String> list) {
           list.remove(0);
       }
@@ -1695,7 +1695,7 @@ public class Test04 {
   名称: 阿基米德
   状态: com.cyborg2077.demo03.Chopstick@1eadee3上的BLOCKED, 拥有者: 苏格拉底
   总阻止数: 1, 总等待数: 0
-
+  
   堆栈跟踪: 
   com.cyborg2077.demo03.Philosopher.run(Philosopher.java:32)
      - 已锁定 com.cyborg2077.demo03.Chopstick@45bda0d0
@@ -1703,7 +1703,7 @@ public class Test04 {
   名称: 苏格拉底
   状态: com.cyborg2077.demo03.Chopstick@754b4f67上的BLOCKED, 拥有者: 柏拉图
   总阻止数: 8, 总等待数: 2
-
+  
   堆栈跟踪: 
   com.cyborg2077.demo03.Philosopher.run(Philosopher.java:32)
      - 已锁定 com.cyborg2077.demo03.Chopstick@1eadee3
@@ -1711,7 +1711,7 @@ public class Test04 {
   名称: 柏拉图
   状态: com.cyborg2077.demo03.Chopstick@18f3778b上的BLOCKED, 拥有者: 亚里士多德
   总阻止数: 3, 总等待数: 3
-
+  
   堆栈跟踪: 
   com.cyborg2077.demo03.Philosopher.run(Philosopher.java:32)
      - 已锁定 com.cyborg2077.demo03.Chopstick@754b4f67
@@ -1719,7 +1719,7 @@ public class Test04 {
   名称: 亚里士多德
   状态: com.cyborg2077.demo03.Chopstick@68d84ce6上的BLOCKED, 拥有者: 赫拉克利特
   总阻止数: 7, 总等待数: 2
-
+  
   堆栈跟踪: 
   com.cyborg2077.demo03.Philosopher.run(Philosopher.java:32)
      - 已锁定 com.cyborg2077.demo03.Chopstick@18f3778b
@@ -1727,7 +1727,7 @@ public class Test04 {
   名称: 赫拉克利特
   状态: com.cyborg2077.demo03.Chopstick@45bda0d0上的BLOCKED, 拥有者: 阿基米德
   总阻止数: 2, 总等待数: 0
-
+  
   堆栈跟踪: 
   com.cyborg2077.demo03.Philosopher.run(Philosopher.java:32)
      - 已锁定 com.cyborg2077.demo03.Chopstick@68d84ce6
