@@ -205,7 +205,9 @@ body {
 
 @font-face {
   font-family: 'ChenYuluoyan-2.0-Thin';
-  src: url('/fonts/ChenYuluoyan-2.0-Thin.ttf') format('truetype');
+  src:
+    url('/fonts/ChenYuluoyan-2.0-Thin.woff2') format('woff2'),
+    url('/fonts/ChenYuluoyan-2.0-Thin.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -213,7 +215,9 @@ body {
 
 @font-face {
   font-family: 'WoHuiBaNiJiaoZuoAiQing-2';
-  src: url('/fonts/WoHuiBaNiJiaoZuoAiQing-2.ttf') format('truetype');
+  src:
+    url('/fonts/WoHuiBaNiJiaoZuoAiQing-2.woff2') format('woff2'),
+    url('/fonts/WoHuiBaNiJiaoZuoAiQing-2.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -222,6 +226,7 @@ body {
 .prose h1.page-title {
   font-family: 'WoHuiBaNiJiaoZuoAiQing-2', sans-serif;
   font-weight: 400;
+  font-synthesis: none;
   font-size: 3.5rem;
   line-height: 1.1;
 }
