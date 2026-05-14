@@ -32,6 +32,12 @@ export const UI: Ui = {
       displayMode: 'alwaysText',
       text: 'Projects',
     },
+    {
+      path: '/insights',
+      title: 'Insights',
+      displayMode: 'alwaysText',
+      text: 'Insights',
+    },
   ],
   socialLinks: [
     {

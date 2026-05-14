@@ -13,7 +13,7 @@ import ToTopButton from '~/components/widgets/ToTopButton.astro'
 import Backdrop from '~/components/base/Backdrop.astro'
 
 import { SITE, UI, FEATURES } from '~/config'
-import { withBasePath } from '~/utils/path'
+import { resolvePath, withBasePath } from '~/utils/path'
 
 import type { BgType } from '~/types'
 
@@ -28,6 +28,7 @@ interface Props {
 
 const { title, description, ogImage, bgType, pubDate, lastModDate } =
   Astro.props
+const isInsightsPage = Astro.url.pathname === resolvePath('/insights')
 
 let style: Record<string, string> = {}
 
@@ -76,7 +77,12 @@ if (hasCustomCursor) style['--external-link-cursor'] = cursorType
       <slot />
       {
         Astro.url.pathname !== withBasePath('/') && (
-          <footer class="slide-enter animate-delay-1000! prose mx-auto mt-8 print:hidden">
+          <footer
+            class:list={[
+              'slide-enter animate-delay-1000! prose mx-auto mt-8 print:hidden',
+              isInsightsPage && 'w-full max-w-300',
+            ]}
+          >
             <BackLink />
           </footer>
         )

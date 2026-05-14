@@ -32,12 +32,12 @@ export const pageSchema = z.object({
 
   // 背景类型
   bgType: z
-    .union([z.literal(false), z.enum(['plum', 'dot', 'rose'])])
-    // 可以是 false（无背景）或三种预设类型之一
+    .union([z.literal(false), z.enum(['plum', 'dot', 'rose', 'snow'])])
+    // 可以是 false（无背景）或四种预设类型之一
     .default(false)
     .describe(
       '指定页面是否应用背景及背景类型。不需要时删除或设为 false。' +
-      'plum（李子色）、dot（点状）、rose（玫瑰）'
+      'plum（李子色）、dot（点状）、rose（玫瑰）、snow（飘雪）'
     ),
 
   // Open Graph 社交分享图
@@ -211,4 +211,57 @@ export const projectSchema = z.object({
   category: z
     .string()
     .describe('**必填**。项目的分类。'),
+})
+
+/* =====================================================
+   Insight Schema - 用于语录/启发/哲理内容
+   ===================================================== */
+export const insightSchema = z.object({
+  title: z
+    .string()
+    .describe('**必填**。Insight 标题。')
+    .transform((value) => value.trim()),
+
+  description: z
+    .string()
+    .default('')
+    .describe('简短描述，用于 SEO 或列表摘要。')
+    .transform((value) => value.trim()),
+
+  pubDate: z.coerce
+    .date()
+    .describe('**必填**。Insight 的记录日期。'),
+
+  category: z
+    .string()
+    .describe('**必填**。Insight 的分类标签。')
+    .transform((value) => value.trim()),
+
+  image: z
+    .string()
+    .default('')
+    .describe('Insight 右侧展示图片，使用 /public 下的路径。为空表示不展示图片。')
+    .transform((value) => value.trim()),
+
+  imageAlt: z
+    .string()
+    .default('')
+    .describe('图片的替代文本。无图时可留空。')
+    .transform((value) => value.trim()),
+
+  author: z
+    .string()
+    .default('')
+    .describe('语录或观点的作者。为空表示不标注作者。')
+    .transform((value) => value.trim()),
+
+  sourceUrl: z
+    .union([z.string().url('无效的 URL 格式。'), z.literal('')])
+    .default('')
+    .describe('语录来源链接。为空表示不提供来源链接。'),
+
+  draft: z
+    .boolean()
+    .default(false)
+    .describe('标记为草稿。true 时仅在开发环境可见，生产构建时会被排除。'),
 })

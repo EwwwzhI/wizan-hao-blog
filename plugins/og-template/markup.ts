@@ -8,10 +8,12 @@ export const ogImageMarkup = (
   title: string,
   bgType: BgType
 ) => {
-  if (!['plum', 'dot', 'rose'].includes(bgType))
+  if (!['plum', 'dot', 'rose', 'snow'].includes(bgType))
     throw new Error(
-      "The value of 'bgType' must be one of the following: 'plum', 'dot', 'rose'."
+      "The value of 'bgType' must be one of the following: 'plum', 'dot', 'rose', 'snow'."
     )
+
+  const background = bgType === 'snow' ? backgroundBase64.dot : backgroundBase64[bgType]
 
   return html`<div
     tw="relative flex justify-center items-center w-full h-full"
@@ -19,7 +21,7 @@ export const ogImageMarkup = (
   >
     <img
       tw="absolute inset-0 w-full h-full"
-      src="${backgroundBase64[bgType]}"
+      src="${background}"
       alt="open graph"
     />
 

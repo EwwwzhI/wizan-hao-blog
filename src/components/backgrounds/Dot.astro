@@ -20,7 +20,7 @@
     static readonly SCALE = 200
     static readonly LENGTH = 10
     static readonly SPACING = 15
-    static readonly FPS = 10
+    static readonly FPS = 20
 
     connectedCallback() {
       this.canvas = this.querySelector('canvas')
@@ -109,7 +109,7 @@
 
       const width = window.innerWidth
       const height = window.innerHeight
-      const t = now / 10000
+      const t = now / 1600
       const isDark = document.documentElement.classList.contains('dark')
       const color = isDark ? 55 : 200
 

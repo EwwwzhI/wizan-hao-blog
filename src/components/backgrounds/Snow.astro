@@ -1,0 +1,170 @@
+---
+---
+
+<bg-snow
+  class="z--1 fixed top-0 bottom-0 left-0 right-0 pointer-events-none print:hidden op-80 dark:op-100"
+  style="mask-image: radial-gradient(circle at center, black 58%, transparent 100%);"
+>
+  <canvas class="h-full w-full"></canvas>
+</bg-snow>
+
+<script>
+  type Snowflake = {
+    x: number
+    y: number
+    radius: number
+    speedY: number
+    speedX: number
+    sway: number
+    phase: number
+    opacity: number
+    depth: number
+  }
+
+  class BgSnowElement extends HTMLElement {
+    canvas: HTMLCanvasElement | null = null
+    ctx: CanvasRenderingContext2D | null = null
+    rafId: number | null = null
+    lastFrameAt = 0
+    flakes: Snowflake[] = []
+    cleanupResize: (() => void) | null = null
+
+    static readonly FPS = 40
+    static readonly BASE_DENSITY = 1000
+    static readonly MIN_FLAKES = 85
+    static readonly MAX_FLAKES = 880
+
+    connectedCallback() {
+      this.canvas = this.querySelector('canvas')
+      this.ctx = this.canvas?.getContext('2d') ?? null
+      if (!this.canvas || !this.ctx) return
+
+      const resize = () => {
+        this.resizeCanvas()
+        this.rebuildFlakes()
+        this.draw(performance.now(), 16)
+      }
+
+      window.addEventListener('resize', resize)
+      this.cleanupResize = () => window.removeEventListener('resize', resize)
+
+      resize()
+      this.lastFrameAt = performance.now()
+      this.tick(this.lastFrameAt)
+    }
+
+    disconnectedCallback() {
+      if (this.rafId !== null) cancelAnimationFrame(this.rafId)
+      this.rafId = null
+      this.cleanupResize?.()
+      this.cleanupResize = null
+      this.flakes = []
+      this.ctx = null
+      this.canvas = null
+    }
+
+    resizeCanvas() {
+      if (!this.canvas || !this.ctx) return
+
+      const width = window.innerWidth
+      const height = window.innerHeight
+      const dpr = Math.min(window.devicePixelRatio || 1, 2)
+
+      this.canvas.width = Math.floor(width * dpr)
+      this.canvas.height = Math.floor(height * dpr)
+      this.canvas.style.width = `${width}px`
+      this.canvas.style.height = `${height}px`
+      this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+    }
+
+    clamp(value: number, min: number, max: number) {
+      return Math.min(max, Math.max(min, value))
+    }
+
+    createFlake(randomY = true): Snowflake {
+      const width = window.innerWidth
+      const height = window.innerHeight
+      const depth = Math.random() * 0.7 + 0.2
+      const radius = 0.2 + depth * 1
+
+      return {
+        x: Math.random() * width,
+        y: randomY ? Math.random() * height : -radius * 6,
+        radius,
+        speedY: 20 + depth * 42,
+        speedX: (Math.random() - 0.5) * (8 + depth * 12),
+        sway: 6 + depth * 18,
+        phase: Math.random() * Math.PI * 2,
+        opacity: 0.16 + Math.random() * 0.35 + depth * 0.12,
+        depth,
+      }
+    }
+
+    rebuildFlakes() {
+      const area = window.innerWidth * window.innerHeight
+      const count = this.clamp(
+        Math.round(area / BgSnowElement.BASE_DENSITY),
+        BgSnowElement.MIN_FLAKES,
+        BgSnowElement.MAX_FLAKES
+      )
+
+      this.flakes = Array.from({ length: count }, () => this.createFlake(true))
+    }
+
+    respawnFlake(flake: Snowflake) {
+      Object.assign(flake, this.createFlake(false))
+    }
+
+    draw(now: number, deltaMs: number) {
+      if (!this.canvas || !this.ctx) return
+
+      const width = window.innerWidth
+      const height = window.innerHeight
+      const isDark = document.documentElement.classList.contains('dark')
+      const [r, g, b] = isDark ? [232, 238, 245] : [126, 145, 170]
+      const delta = Math.min(deltaMs, 48) / 1000
+      const wind = Math.sin(now / 5000) * 0.18
+
+      this.ctx.clearRect(0, 0, width, height)
+
+      for (const flake of this.flakes) {
+        const sway = Math.sin(now / 1200 + flake.phase) * flake.sway
+        flake.x += (flake.speedX + sway + wind * 40 * flake.depth) * delta
+        flake.y += flake.speedY * delta
+
+        if (flake.y - flake.radius > height || flake.x < -80 || flake.x > width + 80) {
+          this.respawnFlake(flake)
+        }
+
+        const alpha = Math.min(0.82, flake.opacity)
+
+        this.ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`
+        this.ctx.beginPath()
+        this.ctx.arc(flake.x, flake.y, flake.radius, 0, Math.PI * 2)
+        this.ctx.fill()
+
+        if (flake.depth > 0.72) {
+          this.ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${alpha * 0.4})`
+          this.ctx.lineWidth = Math.max(0.5, flake.radius * 0.35)
+          this.ctx.beginPath()
+          this.ctx.moveTo(flake.x - flake.radius * 0.4, flake.y - flake.radius)
+          this.ctx.lineTo(flake.x + flake.radius * 0.25, flake.y + flake.radius * 1.6)
+          this.ctx.stroke()
+        }
+      }
+    }
+
+    tick = (now: number) => {
+      if (now - this.lastFrameAt >= 1000 / BgSnowElement.FPS) {
+        this.draw(now, now - this.lastFrameAt)
+        this.lastFrameAt = now
+      }
+
+      this.rafId = requestAnimationFrame(this.tick)
+    }
+  }
+
+  if (!customElements.get('bg-snow')) {
+    customElements.define('bg-snow', BgSnowElement)
+  }
+</script>
