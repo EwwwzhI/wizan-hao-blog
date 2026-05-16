@@ -1,8 +1,10 @@
-Hello! I'm ***WutongYu***. This is my personal website, which is inspired by *[lin-stephanie](https://github.com/lin-stephanie)‘s [astro-antfustyle-theme](https://github.com/lin-stephanie/astro-antfustyle-theme)*. Detailed documentation is placed under the '/doc' folder in the root directiory of the project.
+Hello! I'm ***WutongYu***. This is my personal website, which is inspired by *[lin-stephanie](https://github.com/lin-stephanie)‘s [astro-antfustyle-theme](https://github.com/lin-stephanie/astro-antfustyle-theme)*. 
 
-I'm an IoT student at :link[Hohai University]{id=https://www.hhu.edu.cn .square}. Recently i'm applying for *Msc(cs)* at :link[HKU]{id=https://www.hku.hk .square} / :link[CUHK]{id=https://www.cuhk.edu.hk img=/cuhk.png .square} / :link[HKUST]{id=https://hkust.edu.hk .square}.
+It's also an open-source Astro theme available for anyone to use. Detailed documentation is placed under the [/doc](https://github.com/wutongyuonce/wutong-yu-blog/tree/main/doc) folder.
 
-I'm also looking for an *INTERN* opportunity regarding *backend/agent engineering*. You can visit and download ***[my resume here](/resume.pdf)***.
+I'm an cs student at :link[Hohai University]{id=https://www.hhu.edu.cn .square}. Recently i'm applying for Msc cs at :link[HKU]{id=https://www.hku.hk .square} / :link[CUHK]{id=https://www.cuhk.edu.hk img=/cuhk.png .square} / :link[HKUST]{id=https://hkust.edu.hk .square}.
+
+I'm also looking for an *INTERN* opportunity regarding *backend/agent engineering*. You can visit and download ***[my resume here]()***.
 
 <br>
 
@@ -18,7 +20,7 @@ You can see ***[all my projects list here](https://wutongyu.site/projects/)***.
 
 <br>
 
-Beyond programming, I enjoy playing fps games like *Valorant* and also *Steam* games, here is my discord id: *yuuu*.
+Beyond programming, I enjoy playing fps games like *Valorant* and also *Steam* games.
 
 I'm alse a fan of kpop groups like *:link[TWICE]{id=https://twice.jype.com} / :link[Idle]{id=https://www.instagram.com/i_dle_official/}*.
 

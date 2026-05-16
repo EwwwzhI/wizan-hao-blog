@@ -1,6 +1,6 @@
 ---
-title: 从多页到混合：Web 应用架构演进的完整图谱(个人站点部署+国内访问)
-description: From Multi-page to Hybrid: A Complete Map of Web Application Architecture Evolution
+title: "从多页到混合：Web 应用架构演进的完整图谱(个人站点部署+国内访问)"
+description: "From Multi-page to Hybrid: A Complete Map of Web Application Architecture Evolution"
 pubDate: 2026-05-16
 lastModDate: ''
 ogImage: false
