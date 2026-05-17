@@ -24,7 +24,7 @@ A streamlined Astro 5 personal site inspired by the Antfu-style visual language.
 - Home page at `/`
 - Blog index at `/blogs/` and article pages at `/blogs/[slug]/`
 - Project showcase page at `/projects/`
-- Insights page at `/insights/` with year-grouped timeline of quotes, reflections, and inspirations
+- Insights page at `/insights/` with a year-grouped timeline of quotes, reflections, and inspirations, plus expandable preview copy, optional images, and the `snow` background
 - Full-text blog search powered by Pagefind
 - Right-side article TOC for blog detail pages
 - Automatic OG image generation for posts and core pages
@@ -76,7 +76,7 @@ pnpm format:write # format files with Prettier
 | `/blogs/` | Blog index |
 | `/blogs/[slug]/` | Blog post detail page |
 | `/projects/` | Project showcase |
-| `/insights/` | Insights page: quotes, reflections, and inspirations in a year-grouped timeline |
+| `/insights/` | Insights page: quotes, reflections, and inspirations in a year-grouped timeline, with expandable preview copy, optional images, and the `snow` background |
 | `/search/` | Search page powered by Pagefind |
 
 ## Content And Customization
@@ -84,9 +84,9 @@ pnpm format:write # format files with Prettier
 | File | Purpose |
 | :--- | :--- |
 | `src/content/home/index.md` | Homepage body content |
-| `src/content/blogs/*.md` | Blog posts rendered at `/blogs/` |
+| `src/content/blogs/**/*.{md,mdx}` | Blog posts rendered at `/blogs/` |
 | `src/content/projects/data.json` | Project card data |
-| `src/content/insights/**/*.md` | Insight entries (quotes, reflections, inspirations) |
+| `src/content/insights/**/*.{md,mdx}` | Insight entries (quotes, reflections, inspirations) |
 | `src/content/schema.ts` | Collection schemas (page, post, project, insight) |
 | `src/config.ts` | Site metadata, nav items, social links, and feature switches |
 | `astro.config.ts` | Astro integrations, Markdown pipeline, image config, and build settings |
@@ -149,6 +149,7 @@ Project-specific notes are kept in `doc/`:
 - `doc/项目解析.md` - Full project architecture and data flow analysis
 - `doc/feature/Insights模块更新说明.md` - Insights module design, content flow, and maintenance guide
 - `doc/feature/文章TOC与响应式导航说明.md` - TOC behavior and responsive navigation details
+- `doc/notes/Insights页面展开收起与字体说明.md` - Notes for the latest Insights expand/collapse behavior, typography, and sizing controls
 - `doc/notes/页面调整.md` - Blog reading experience and page-level adjustments
 - `doc/notes/页面间距统一.md` - Notes on page spacing fixes
 - `doc/notes/LogoButton图标替换说明.md` - Logo replacement from text to SVG with theme switching

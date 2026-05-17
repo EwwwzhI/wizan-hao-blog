@@ -26,6 +26,10 @@ function getPreview(content: string) {
     : plain
 }
 
+function createInsightCopyToggleId(entryId: string) {
+  return `insight-copy-toggle-${entryId.replace(/[^a-zA-Z0-9_-]/g, '-')}`
+}
+
 const rawGroups = await getGroupedInsightsByYear('insights')
 
 const insightGroups = await Promise.all(
@@ -44,6 +48,7 @@ const insightGroups = await Promise.all(
           ...item,
           Content,
           preview,
+          copyToggleId: createInsightCopyToggleId(item.entry.id),
           isTruncated,
         }
       })
@@ -123,20 +128,27 @@ const insightGroups = await Promise.all(
                     )}
 
                     {item.isTruncated ? (
-                      <details class="insight-copy">
-                        <summary class="insight-copy__summary">
+                      <div class="insight-copy">
+                        <input
+                          id={item.copyToggleId}
+                          class="insight-copy__state"
+                          type="checkbox"
+                        />
+                        <p class="insight-copy__preview">
+                          {item.preview}
+                        </p>
+                        <div class="insight-copy__full">
+                          <item.Content />
+                        </div>
+                        <label for={item.copyToggleId} class="insight-copy__summary">
                           <span class="insight-copy__summary-text insight-copy__summary-text--closed">
                             展开全文
                           </span>
                           <span class="insight-copy__summary-text insight-copy__summary-text--open">
                             收起内容
                           </span>
-                        </summary>
-                        <p class="insight-copy__preview">{item.preview}</p>
-                        <div class="insight-copy__full">
-                          <item.Content />
-                        </div>
-                      </details>
+                        </label>
+                      </div>
                     ) : (
                       <div class="insight-node__content">
                         <item.Content />
@@ -171,6 +183,9 @@ const insightGroups = await Promise.all(
     padding: 0 0 4rem;
     color: color-mix(in srgb, var(--c-text) 90%, transparent);
     background: transparent;
+    --insight-title-size: clamp(1.48rem, 2.25vw, 2.08rem);
+    --insight-body-size: clamp(1.04rem, 1.18vw, 1.18rem);
+    --insight-body-line-height: 1.95;
   }
 
   .insights-timeline {
@@ -324,7 +339,7 @@ const insightGroups = await Promise.all(
     font-family: 'WoHuiBaNiJiaoZuoAiQing-2', sans-serif;
     font-weight: 400;
     font-synthesis: none;
-    font-size: clamp(2.15rem, 1.7vw, 1.55rem);
+    font-size: var(--insight-title-size);
     line-height: 1.4;
     letter-spacing: -0.02em;
   }
@@ -342,20 +357,37 @@ const insightGroups = await Promise.all(
 
   .insight-copy__preview,
   .insight-node__content :global(p),
-  .insight-copy__full :global(p) {
+  .insight-node__content :global(li),
+  .insight-copy__remainder {
     margin: 1rem 0 0;
-    font-size: 1.02rem;
-    line-height: 1.95;
+    font-family: 'SourceHanSerifCN-Regular', serif;
+    font-weight: 400;
+    font-size: var(--insight-body-size);
+    line-height: var(--insight-body-line-height);
     opacity: 0.84;
   }
 
   .insight-node__content :global(p:first-child),
-  .insight-copy__full :global(p:first-child) {
+  .insight-node__content :global(ul:first-child),
+  .insight-node__content :global(ol:first-child),
+  .insight-copy__full :global(p:first-child),
+  .insight-copy__full :global(ul:first-child),
+  .insight-copy__full :global(ol:first-child) {
     margin-top: 1rem;
   }
 
   .insight-node__content :global(p + p),
-  .insight-copy__full :global(p + p) {
+  .insight-node__content :global(p + ul),
+  .insight-node__content :global(p + ol),
+  .insight-node__content :global(ul + p),
+  .insight-node__content :global(ol + p),
+  .insight-node__content :global(li + li),
+  .insight-copy__full :global(p + p),
+  .insight-copy__full :global(p + ul),
+  .insight-copy__full :global(p + ol),
+  .insight-copy__full :global(ul + p),
+  .insight-copy__full :global(ol + p),
+  .insight-copy__full :global(li + li) {
     margin-top: 0.85rem;
   }
 
@@ -364,8 +396,20 @@ const insightGroups = await Promise.all(
     flex-direction: column;
   }
 
+  .insight-copy__state {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    border: 0;
+    white-space: nowrap;
+  }
+
   .insight-copy__summary {
-    order: 3;
     display: inline-flex;
     align-items: center;
     gap: 0.25rem;
@@ -390,18 +434,58 @@ const insightGroups = await Promise.all(
   }
 
   .insight-copy__summary-text--open,
-  .insight-copy[open] .insight-copy__summary-text--closed,
-  .insight-copy[open] .insight-copy__preview {
+  .insight-copy__full,
+  .insight-copy__state:checked ~ .insight-copy__preview,
+  .insight-copy__state:checked ~ .insight-copy__summary .insight-copy__summary-text--closed {
     display: none;
   }
 
-  .insight-copy[open] .insight-copy__summary-text--open,
-  .insight-copy[open] .insight-copy__full {
+  .insight-copy__state:checked ~ .insight-copy__summary .insight-copy__summary-text--open,
+  .insight-copy__state:checked ~ .insight-copy__full {
     display: block;
   }
 
-  .insight-copy__full {
-    display: none;
+  .insight-copy__full :global(p),
+  .insight-copy__full :global(li) {
+    margin: 1rem 0 0;
+    font-family: 'SourceHanSerifCN-Regular', serif;
+    font-weight: 400;
+    font-size: var(--insight-body-size);
+    line-height: var(--insight-body-line-height);
+    opacity: 0.84;
+  }
+
+  .insight-node__content :global(ul),
+  .insight-node__content :global(ol),
+  .insight-copy__full :global(ul),
+  .insight-copy__full :global(ol) {
+    margin: 1rem 0 0;
+    padding-left: 1.3rem;
+  }
+
+  .insight-node__content :global(ol > li),
+  .insight-copy__full :global(ol > li) {
+    position: relative;
+    padding-left: 1.75em;
+  }
+
+  .insight-node__content :global(ol > li)::before,
+  .insight-copy__full :global(ol > li)::before {
+    content: counter(list-item, decimal) '.';
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-family: 'SourceHanSerifCN-Regular', serif;
+    font-weight: 400;
+    font-size: var(--insight-body-size);
+    line-height: var(--insight-body-line-height);
+    color: color-mix(in srgb, var(--c-text) 88%, transparent);
+    opacity: 0.84;
+  }
+
+  .insight-node__content :global(li)::marker,
+  .insight-copy__full :global(li)::marker {
+    font-family: 'SourceHanSerifCN-Regular', serif;
   }
 
   .insight-node__source {
@@ -510,6 +594,12 @@ const insightGroups = await Promise.all(
 
   @media (max-width: 640px) {
     .insights-page {
+      --insight-title-size: clamp(1.48rem, 5.9vw, 1.88rem);
+      --insight-body-size: clamp(0.98rem, 3.2vw, 1.08rem);
+      --insight-body-line-height: 1.85;
+    }
+
+    .insights-page {
       padding-bottom: 2rem;
     }
 
@@ -535,9 +625,10 @@ const insightGroups = await Promise.all(
 
     .insight-copy__preview,
     .insight-node__content :global(p),
-    .insight-copy__full :global(p) {
-      font-size: 0.98rem;
-      line-height: 1.85;
+    .insight-node__content :global(li),
+    .insight-copy__remainder {
+      font-size: var(--insight-body-size);
+      line-height: var(--insight-body-line-height);
     }
 
     .insight-node__source {

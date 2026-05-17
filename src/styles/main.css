@@ -223,6 +223,14 @@ body {
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'SourceHanSerifCN-Regular';
+  src: url('/fonts/SourceHanSerifCN-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 .prose h1.page-title {
   font-family: 'WoHuiBaNiJiaoZuoAiQing-2', sans-serif;
   font-weight: 400;

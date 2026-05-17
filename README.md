@@ -27,7 +27,7 @@
 - 首页 `/`
 - 博客索引 `/blogs/` 与文章页 `/blogs/[slug]/`
 - 项目展示页 `/projects/`
-- Insights 页 `/insights/`，按年份分组的时间线展示语录、启发与反思
+- Insights 页 `/insights/`，按年份分组的时间线展示语录、启发与反思，支持正文预览展开、可选配图和 `snow` 背景
 - 基于 Pagefind 的博客全文搜索
 - 文章详情页右侧目录
 - 文章与核心页面的自动 OG 图片生成
@@ -79,7 +79,7 @@ pnpm format:write # 格式化代码（Prettier）
 | `/blogs/` | 博客索引页 |
 | `/blogs/[slug]/` | 博客文章详情页 |
 | `/projects/` | 项目展示页 |
-| `/insights/` | Insights 页：按年份时间线展示语录、启发与反思 |
+| `/insights/` | Insights 页：按年份时间线展示语录、启发与反思，支持正文预览展开、可选配图与 `snow` 背景 |
 | `/search/` | 基于 Pagefind 的搜索页 |
 
 ## 内容与定制
@@ -87,9 +87,9 @@ pnpm format:write # 格式化代码（Prettier）
 | 文件 | 用途 |
 | :--- | :--- |
 | `src/content/home/index.md` | 首页正文内容 |
-| `src/content/blogs/*.md` | 博客文章，渲染在 `/blogs/` 下 |
+| `src/content/blogs/**/*.{md,mdx}` | 博客文章，渲染在 `/blogs/` 下 |
 | `src/content/projects/data.json` | 项目卡片数据 |
-| `src/content/insights/**/*.md` | Insight 条目（语录、启发、反思） |
+| `src/content/insights/**/*.{md,mdx}` | Insight 条目（语录、启发、反思） |
 | `src/content/schema.ts` | 内容集合的 schema 定义（页面、文章、项目、Insight） |
 | `src/config.ts` | 站点元信息、导航项、社交链接与功能开关 |
 | `astro.config.ts` | Astro 集成配置、Markdown 管线、图片优化与构建设置 |
@@ -152,6 +152,7 @@ src/components/* + styles/*  -> 最终 UI 输出
 - `doc/项目解析.md` — 完整的项目架构与数据流分析
 - `doc/feature/Insights模块更新说明.md` — Insights 模块设计、内容链路与维护指南
 - `doc/feature/文章TOC与响应式导航说明.md` — 目录行为与响应式导航细节
+- `doc/notes/Insights页面展开收起与字体说明.md` — Insights 页面最近的展开收起、字体与排版说明
 - `doc/notes/页面调整.md` — 博客阅读体验与页面级调整
 - `doc/notes/页面间距统一.md` — 页面间距修复记录
 - `doc/notes/LogoButton图标替换说明.md` — Logo 从文字替换为 SVG 及主题切换适配
