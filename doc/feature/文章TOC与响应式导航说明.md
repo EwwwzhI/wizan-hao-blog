@@ -4,8 +4,6 @@
 
 ## 1. 当前实现范围
 
-当前未提交且直接相关的代码主要集中在以下文件：
-
 - `src/components/views/RenderPost.astro`
 - `src/components/base/DesktopAside.astro`
 - `src/components/toc/TocSidebar.astro`

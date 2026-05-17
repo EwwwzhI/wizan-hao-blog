@@ -1,160 +1,178 @@
 # Wutong-Yu-Blog
 
-A streamlined Astro 5 personal site inspired by the Antfu-style visual language. This repository focuses on a small, opinionated feature set: homepage, blog, projects, and search, while keeping the codebase easy to extend.
+[English](README_ENG.md) | [1w5+博客项目解析，深入了解 Astro](doc/)
 
-## Overview
 
-- Framework: Astro 5 + TypeScript
-- Styling: UnoCSS + custom CSS
-- Content: Markdown / MDX via Astro Content Collections
-- Search: Pagefind (blogs only)
-- UX: light/dark theme switching with view transitions
-- Content extras: article TOC, reading-friendly blog layout, automatic OG image generation
+[![Astro](https://img.shields.io/badge/Astro-5-ff5a03?logo=astro&logoColor=white)](https://astro.build)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178c6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![UnoCSS](https://img.shields.io/badge/UnoCSS-66-656565?logo=unocss&logoColor=white)](https://unocss.dev)
+[![MDX](https://img.shields.io/badge/MDX-ok-1b1f24?logo=mdx&logoColor=white)](https://mdxjs.com)
+[![Pagefind](https://img.shields.io/badge/Pagefind-search-4b32c3)](https://pagefind.app)
+[![pnpm](https://img.shields.io/badge/pnpm-10.28-f69220?logo=pnpm&logoColor=white)](https://pnpm.io)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
-## Feature Highlights
+一个精简的 Astro 5 个人站点，视觉风格受 Antfu 风格启发。专注于一个小而精的功能集：首页 Home、博客 Blogs、项目 Projects、启发 Insights 和搜索 Search，保持代码库易于扩展。
 
-- Home page at `/`
-- Blog index at `/blogs/` and article pages at `/blogs/[slug]/`
-- Project showcase page at `/projects/`
-- Full-text blog search powered by Pagefind
-- Right-side article TOC for blog detail pages
-- Automatic OG image generation for posts and core pages
-- Three built-in background effects: `plum`, `dot`, and `rose`
-- Social links and navigation configured from a single config file
+## 概览
 
-## Tech Stack
+- 框架：Astro 5 + TypeScript
+- 样式：UnoCSS + 自定义 CSS
+- 内容：通过 Astro Content Collections 管理 Markdown / MDX
+- 搜索：Pagefind（仅限博客）
+- 体验：支持明/暗主题切换与视图转场
+- 内容增强：文章目录、阅读友好的博客排版、自动生成 OG 图片
 
-- `astro` for routing, static generation, and content rendering
-- `@astrojs/mdx` for MDX support
-- `unocss` for utility-first styling
-- `astro-expressive-code` for code block presentation
-- `pagefind` for static search indexing
-- `sharp` + `satori` for image and OG generation
-- `eslint` + `prettier` for code quality and formatting
+## 功能亮点
 
-## Requirements
+- 首页 `/`
+- 博客索引 `/blogs/` 与文章页 `/blogs/[slug]/`
+- 项目展示页 `/projects/`
+- Insights 页 `/insights/`，按年份分组的时间线展示语录、启发与反思
+- 基于 Pagefind 的博客全文搜索
+- 文章详情页右侧目录
+- 文章与核心页面的自动 OG 图片生成
+- 四种内置背景效果：`plum`、`dot`、`rose`、`snow`
+- 统一的配置文件控制社交链接与导航栏
 
-- Node.js `18.20.8`, `20.9.0+`, or `22+`
+## 技术栈
+
+- `astro` — 路由、静态生成与内容渲染
+- `@astrojs/mdx` — MDX 支持
+- `unocss` — 原子化 CSS
+- `astro-expressive-code` — 代码块语法高亮
+- `pagefind` — 静态搜索索引
+- `sharp` + `satori` — 图片处理与 OG 图片生成
+- `eslint` + `prettier` — 代码质量与格式化
+
+## 环境要求
+
+- Node.js `18.20.8`、`20.9.0+` 或 `22+`
 - `pnpm@10.28.0`
 
-## Quick Start
+## 快速开始
 
 ```bash
 pnpm install
 pnpm dev
 ```
 
-Then open the local Astro dev server shown in the terminal.
+然后在终端中打开 Astro 开发服务器地址即可。
 
-## Available Commands
+## 可用命令
 
 ```bash
-pnpm dev          # start local development server
-pnpm check        # run Astro type/content checks
-pnpm build        # create production build
-pnpm preview      # preview the production build locally
-pnpm lint         # run ESLint
-pnpm lint:fix     # fix lint issues where possible
-pnpm format       # check formatting with Prettier
-pnpm format:write # format files with Prettier
+pnpm dev          # 启动本地开发服务器
+pnpm check        # 运行 Astro 类型与内容检查
+pnpm build        # 生成生产环境构建产物
+pnpm preview      # 本地预览生产构建
+pnpm lint         # 运行 ESLint 检查
+pnpm lint:fix     # 自动修复 lint 问题
+pnpm format       # 检查代码格式（Prettier）
+pnpm format:write # 格式化代码（Prettier）
 ```
 
-## Routes
+## 路由
 
-| Route | Purpose |
+| 路由 | 用途 |
 | :--- | :--- |
-| `/` | Homepage |
-| `/blogs/` | Blog index |
-| `/blogs/[slug]/` | Blog post detail page |
-| `/projects/` | Project showcase |
-| `/search/` | Search page powered by Pagefind |
+| `/` | 首页 |
+| `/blogs/` | 博客索引页 |
+| `/blogs/[slug]/` | 博客文章详情页 |
+| `/projects/` | 项目展示页 |
+| `/insights/` | Insights 页：按年份时间线展示语录、启发与反思 |
+| `/search/` | 基于 Pagefind 的搜索页 |
 
-## Content And Customization
+## 内容与定制
 
-| File | Purpose |
+| 文件 | 用途 |
 | :--- | :--- |
-| `src/content/home/index.md` | Homepage body content |
-| `src/content/blog/*.md` | Blog posts rendered at `/blogs/` |
-| `src/content/projects/data.json` | Project card data |
-| `src/config.ts` | Site metadata, nav items, social links, and feature switches |
-| `astro.config.ts` | Astro integrations, Markdown pipeline, image config, and build settings |
+| `src/content/home/index.md` | 首页正文内容 |
+| `src/content/blogs/*.md` | 博客文章，渲染在 `/blogs/` 下 |
+| `src/content/projects/data.json` | 项目卡片数据 |
+| `src/content/insights/**/*.md` | Insight 条目（语录、启发、反思） |
+| `src/content/schema.ts` | 内容集合的 schema 定义（页面、文章、项目、Insight） |
+| `src/config.ts` | 站点元信息、导航项、社交链接与功能开关 |
+| `astro.config.ts` | Astro 集成配置、Markdown 管线、图片优化与构建设置 |
 
-### Main Config Entry Points
+### 主要配置入口
 
-- `SITE` in `src/config.ts`: website URL, title, description, locale, image domains
-- `UI` in `src/config.ts`: internal navs, social links, navbar layout, post/group display rules
-- `FEATURES` in `src/config.ts`: TOC, search, slide animation, OG image defaults
+- `src/config.ts` 中的 `SITE`：网站 URL、标题、描述、语言地区、图片域名
+- `src/config.ts` 中的 `UI`：内部导航、社交链接、导航栏布局、文章/项目展示规则
+- `src/config.ts` 中的 `FEATURES`：目录、搜索、入场动画、OG 图片默认配置
 
-## Project Structure
+## 项目结构
 
 ```text
 src/
   components/
-    backgrounds/  # Background, Dot, Plum, Rose
+    backgrounds/  # Background, Dot, Plum, Rose, Snow
     base/         # Head, Link, Footer, Backdrop, PostMeta, Divider
     nav/          # NavBar, NavItem, NavSwitch
     toc/          # Toc, TocSidebar, TocItem
-    views/        # RenderPage, RenderPost, ListView, GroupView
+    views/        # RenderPage, RenderPost, ListView, GroupView, InsightsView
     widgets/      # LogoButton, SearchSwitch, ThemeSwitch, BackLink
   content/
-    blog/         # Blog posts (Markdown / MDX)
-    home/         # Homepage content
-    projects/     # Project data (JSON)
+    blogs/        # 博客文章（Markdown / MDX）
+    home/         # 首页内容
+    projects/     # 项目数据（JSON）
+    insights/     # Insight 条目，按年份归档（Markdown）
+    schema.ts     # 所有内容集合的 Zod schema 定义
   layouts/        # BaseLayout, StandardLayout
-  pages/          # Route definitions
+  pages/          # 路由定义
   styles/         # main.css, prose.css, markdown.css
-  utils/          # path, datetime, data, misc, toc helpers
-plugins/          # remark/rehype plugins, OG helpers
-public/           # Static assets such as favicon, fonts, and generated images
-doc/              # Project notes and customization documents
+  utils/          # 路径、日期、数据、杂项、目录工具函数
+plugins/          # remark/rehype 插件、OG 辅助
+public/           # 静态资源：favicon、字体、生成的图片等
+doc/              # 项目笔记与定制说明文档
 ```
 
-## Architecture Notes
+## 架构说明
 
-**Content flow**
+**内容流转链路**
 
 ```text
-src/content/*                -> raw Markdown / MDX / JSON content
-src/content.config.ts        -> schema validation and parsing
-astro.config.ts + plugins/*  -> Markdown / MDX processing
-src/pages/*                  -> route generation
-src/layouts/*                -> page shell
-src/components/views/*       -> page-level composition
-src/components/* + styles/*  -> final UI output
+src/content/*                -> 原始 Markdown / MDX / JSON 内容
+src/content.config.ts        -> schema 校验与解析
+astro.config.ts + plugins/*  -> Markdown / MDX 处理
+src/pages/*                  -> 路由生成
+src/layouts/*                -> 页面外壳
+src/components/views/*       -> 页面级组合
+src/components/* + styles/*  -> 最终 UI 输出
 ```
 
-**Cross-cutting files**
+**横切关注点文件**
 
-- `src/config.ts` centralizes site, UI, and feature configuration
-- `src/types.ts` defines shared TypeScript types for config and features
+- `src/config.ts` 集中管理站点、UI 与功能配置
+- `src/types.ts` 定义共享的 TypeScript 类型（包含 `BgType` 背景类型枚举）
 
-## Documentation
+## 文档
 
-Project-specific notes are kept in `doc/`:
+项目相关说明文档存放在 `doc/` 目录下：
 
-- `doc/项目解析.md` - Full project architecture and data flow analysis
-- `doc/文章TOC与响应式导航说明.md` - TOC behavior and responsive navigation details
-- `doc/页面调整.md` - Blog reading experience and page-level adjustments
-- `doc/BUG修复-页面间距统一.md` - Notes on page spacing fixes
-- `doc/LogoButton图标替换说明.md` - Logo replacement from text to SVG with theme switching
-- `doc/字体修改.md` - Adding and applying local fonts
+- `doc/项目解析.md` — 完整的项目架构与数据流分析
+- `doc/feature/Insights模块更新说明.md` — Insights 模块设计、内容链路与维护指南
+- `doc/feature/文章TOC与响应式导航说明.md` — 目录行为与响应式导航细节
+- `doc/notes/页面调整.md` — 博客阅读体验与页面级调整
+- `doc/notes/页面间距统一.md` — 页面间距修复记录
+- `doc/notes/LogoButton图标替换说明.md` — Logo 从文字替换为 SVG 及主题切换适配
+- `doc/notes/字体修改.md` — 本地字体的添加与应用
 
-## Positioning
+## 定位
 
-This repository is a trimmed variant of the original `astro-antfustyle-theme`. It removes less relevant modules and keeps a smaller, easier-to-maintain surface area.
+本仓库是从原始 `astro-antfustyle-theme` 剪裁而来的变体，去掉了与个人使用场景关联度较低的模块，保留了更小、更易维护的功能面。
 
-Removed or excluded parts:
+已移除或排除的部分：
 
-- Extra pages such as photos, shorts, changelog, feeds, streams, releases, and pull requests
-- Unused integrations such as GitHub activity, RSS, Bluesky, and comments
-- Upstream boilerplate metadata and demo-oriented assets
+- 照片、短片、更新日志、信息流、串流、发布说明、Pull Request 等额外页面
+- GitHub 活动、RSS、Bluesky、评论等未使用的集成
+- 上游模板元数据和面向演示的示例素材
 
-Retained core experience:
+保留的核心体验：
 
-- Home, blog, blog detail, projects, and search
-- Config-driven social links and navbar layout
-- Blog-only search via Pagefind
-- Article TOC on post pages
-- Theme switching with view transitions
-- OG image generation for active pages and posts
-- Multiple background effects
+- 首页、博客列表、博客详情、项目展示、Insights 和搜索
+- 基于配置文件驱动的社交链接与导航栏布局
+- 仅限博客的 Pagefind 搜索
+- 文章页目录
+- 明暗主题切换与视图转场
+- 活跃页面与文章的 OG 图片自动生成
+- 多种背景效果（`plum`、`dot`、`rose`、`snow`）

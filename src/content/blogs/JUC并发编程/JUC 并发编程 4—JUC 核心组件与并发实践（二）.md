@@ -1,7 +1,7 @@
 ---
 title: JUC 并发编程 4—JUC 核心组件与并发实践（二）
 description: JUC Concurrent programming——JUC Core Components and Concurrency Practices
-pubDate: 2026-05-08
+pubDate: 2026-03-08
 lastModDate: ''
 ogImage: false
 toc: true

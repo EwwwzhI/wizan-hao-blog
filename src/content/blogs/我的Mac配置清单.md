@@ -1,7 +1,7 @@
 ---
 title: 我的 Mac 配置清单
 description: My personal configuration list for Mac, including applications/settings/shortcut keys/trackpad gestures/terminal/environment for developers
-pubDate: 2026-05-04
+pubDate: 2026-02-02
 lastModDate: ''
 ogImage: false
 toc: true

@@ -1,7 +1,7 @@
 ---
 title: Markdown Guide
 description: A compact reference page for checking Markdown rendering in this site
-pubDate: 2026-05-02
+pubDate: 2026-01-02
 lastModDate: ''
 ogImage: true
 toc: true

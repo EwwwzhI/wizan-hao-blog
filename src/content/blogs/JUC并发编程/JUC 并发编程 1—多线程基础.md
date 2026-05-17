@@ -1,7 +1,7 @@
 ---
 title: JUC 并发编程 1——多线程基础
 description: JUC Concurrent programming——multithreaded foundation
-pubDate: 2026-05-05
+pubDate: 2026-03-01
 lastModDate: ''
 ogImage: false
 toc: true
