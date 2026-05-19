@@ -1,5 +1,19 @@
 [
   {
+    "id": "XingClaw",
+    "link": "https://github.com/wutongyuonce/XingClaw",
+    "desc": "miniopenclaw agent",
+    "icon": "i-carbon:user-feedback",
+    "category": "Agent"
+  },
+  {
+    "id": "MODULAR-RAG-MCP-SERVER",
+    "link": "https://github.com/wutongyuonce/MODULAR-RAG-MCP-SERVER",
+    "desc": "MODULAR-RAG-MCP-SERVER",
+    "icon": "i-carbon:base-document-set",
+    "category": "Agent"
+  },
+  {
     "id": "wutong-yu-blog",
     "link": "https://github.com/wutongyuonce/wutong-yu-blog",
     "desc": "my personal website",
@@ -12,20 +26,6 @@
     "desc": "a real-time fire-detection system using yolo-8",
     "icon": "i-carbon:fire",
     "category": "Backend"
-  },
-  {
-    "id": "handwritten-figure-detection",
-    "link": "https://github.com/wutongyuonce/handwritten-figure-detection",
-    "desc": "a small tkinter handwritten-figure-detection application",
-    "icon": "i-carbon:number-8",
-    "category": "Backend"
-  },
-  {
-    "id": "XingClaw",
-    "link": "https://github.com/wutongyuonce/XingClaw",
-    "desc": "miniopenclaw agent",
-    "icon": "i-carbon:user-feedback",
-    "category": "Agent"
   }
 
 ]
