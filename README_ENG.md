@@ -10,6 +10,30 @@
 
 A streamlined Astro 5 personal site inspired by the Antfu-style visual language. This repository focuses on a small, opinionated feature set: homepage, blog, projects, insights, and search, while keeping the codebase easy to extend.
 
+Home 页面：
+
+<img src="img/image-20260523141849012.png" alt="image-20260523141849012" style="zoom:22%;" /><img src="img/image-20260523141917048.png" alt="image-20260523141917048" style="zoom:22%;" />
+
+Blogs 页面：
+
+<img src="img/image-20260523142050379.png" alt="image-20260523142050379" style="zoom:22%;" /><img src="img/image-20260523142007090.png" alt="image-20260523142007090" style="zoom:22%;" />
+
+blog 单页宽页面：
+
+<img src="img/image-20260523142518201.png" alt="image-20260523142518201" style="zoom:22%;" />
+
+窄页面：
+
+<img src="img/image-20260523142630842.png" alt="image-20260523142630842" style="zoom:25%;" />
+
+Projects 页面：
+
+<img src="img/image-20260523142432349.png" alt="image-20260523142432349" style="zoom:22%;" /><img src="img/image-20260523142417601.png" alt="image-20260523142417601" style="zoom:22%;" />
+
+Insights 页面：
+
+<img src="img/image-20260523142132268.png" alt="image-20260523142132268" style="zoom:22%;" /><img src="img/image-20260523142158650.png" alt="image-20260523142158650" style="zoom:22%;" />
+
 ## Overview
 
 - Framework: Astro 5 + TypeScript
