@@ -85,15 +85,15 @@
       const width = window.innerWidth
       const height = window.innerHeight
       const depth = Math.random() * 0.7 + 0.2
-      const radius = 0.2 + depth * 1
+      const radius = 0.2 + depth * 2
 
       return {
         x: Math.random() * width,
         y: randomY ? Math.random() * height : -radius * 6,
         radius,
-        speedY: 20 + depth * 42,
+        speedY: 14 + depth * 32,
         speedX: (Math.random() - 0.5) * (8 + depth * 12),
-        sway: 6 + depth * 18,
+        sway: 6 + depth * 10,
         phase: Math.random() * Math.PI * 2,
         opacity: 0.16 + Math.random() * 0.35 + depth * 0.12,
         depth,
@@ -121,7 +121,7 @@
       const width = window.innerWidth
       const height = window.innerHeight
       const isDark = document.documentElement.classList.contains('dark')
-      const [r, g, b] = isDark ? [232, 238, 245] : [126, 145, 170]
+      const [r, g, b] = isDark ? [232, 238, 245] : [40, 40, 40]
       const delta = Math.min(deltaMs, 48) / 1000
       const wind = Math.sin(now / 5000) * 0.18
 

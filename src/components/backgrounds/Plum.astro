@@ -130,10 +130,11 @@
       const R180 = Math.PI
       const R90 = Math.PI / 2
       const R15 = Math.PI / 12
-      const COLOR = '#88888825'
+      const isDark = document.documentElement.classList.contains('dark')
+      const COLOR = isDark ? '#bbbbbb40' : '#55555535'
       const THRESHOLD = 30
       const LEN = 6
-      const INTERVAL = 1000 / 200
+      const INTERVAL = 1000 / 40
 
       const { random } = Math
       const randomMiddle = () => random() * 0.6 + 0.2

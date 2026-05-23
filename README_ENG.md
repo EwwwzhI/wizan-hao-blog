@@ -10,29 +10,37 @@
 
 A streamlined Astro 5 personal site inspired by the Antfu-style visual language. This repository focuses on a small, opinionated feature set: homepage, blog, projects, insights, and search, while keeping the codebase easy to extend.
 
-Home 页面：
+## Home 页面
 
-<img src="img/image-20260523141849012.png" alt="image-20260523141849012" style="zoom:22%;" /><img src="img/image-20260523141917048.png" alt="image-20260523141917048" style="zoom:22%;" />
+<img src="https://raw.githubusercontent.com/wutongyuonce/blogimg/main/img/20260523161839490.png" width="100%" />
 
-Blogs 页面：
+<img src="https://raw.githubusercontent.com/wutongyuonce/blogimg/main/img/20260523161947851.png" width="100%" />
 
-<img src="img/image-20260523142050379.png" alt="image-20260523142050379" style="zoom:22%;" /><img src="img/image-20260523142007090.png" alt="image-20260523142007090" style="zoom:22%;" />
+## Blogs 页面
 
-blog 单页宽页面：
+<img src="https://raw.githubusercontent.com/wutongyuonce/blogimg/main/img/20260523162131253.png" width="100%" />
 
-<img src="img/image-20260523142518201.png" alt="image-20260523142518201" style="zoom:22%;" />
+<img src="https://raw.githubusercontent.com/wutongyuonce/blogimg/main/img/20260523162018760.png" width="100%" />
 
-窄页面：
+### blog 单页宽页面
 
-<img src="img/image-20260523142630842.png" alt="image-20260523142630842" style="zoom:25%;" />
+<img src="https://raw.githubusercontent.com/wutongyuonce/blogimg/main/img/image-20260523142518201.png" width="100%" />
 
-Projects 页面：
+### 窄页面
 
-<img src="img/image-20260523142432349.png" alt="image-20260523142432349" style="zoom:22%;" /><img src="img/image-20260523142417601.png" alt="image-20260523142417601" style="zoom:22%;" />
+<img src="https://raw.githubusercontent.com/wutongyuonce/blogimg/main/img/image-20260523142630842.png" width="70%" />
 
-Insights 页面：
+## Projects 页面
 
-<img src="img/image-20260523142132268.png" alt="image-20260523142132268" style="zoom:22%;" /><img src="img/image-20260523142158650.png" alt="image-20260523142158650" style="zoom:22%;" />
+<img src="https://raw.githubusercontent.com/wutongyuonce/blogimg/main/img/20260523162148681.png" width="100%" />
+
+<img src="https://raw.githubusercontent.com/wutongyuonce/blogimg/main/img/20260523154713480.png" width="100%" />
+
+## Insights 页面
+
+<img src="https://raw.githubusercontent.com/wutongyuonce/blogimg/main/img/20260523155747853.png" width="100%;" />
+
+<img src="https://raw.githubusercontent.com/wutongyuonce/blogimg/main/img/20260523155729719.png" width="100%;" />
 
 ## Overview
 
