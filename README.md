@@ -13,6 +13,30 @@
 
 一个精简的 Astro 5 个人站点，视觉风格受 Antfu 风格启发。专注于一个小而精的功能集：首页 Home、博客 Blogs、项目 Projects、启发 Insights 和搜索 Search，保持代码库易于扩展。
 
+Home 页面：
+
+<img src="img/image-20260523141849012.png" alt="image-20260523141849012" style="zoom:22%;" /><img src="img/image-20260523141917048.png" alt="image-20260523141917048" style="zoom:22%;" />
+
+Blogs 页面：
+
+<img src="img/image-20260523142050379.png" alt="image-20260523142050379" style="zoom:22%;" /><img src="img/image-20260523142007090.png" alt="image-20260523142007090" style="zoom:22%;" />
+
+blog 单页宽页面：
+
+<img src="img/image-20260523142518201.png" alt="image-20260523142518201" style="zoom:22%;" />
+
+窄页面：
+
+<img src="img/image-20260523142630842.png" alt="image-20260523142630842" style="zoom:25%;" />
+
+Projects 页面：
+
+<img src="img/image-20260523142432349.png" alt="image-20260523142432349" style="zoom:22%;" /><img src="img/image-20260523142417601.png" alt="image-20260523142417601" style="zoom:22%;" />
+
+Insights 页面：
+
+<img src="img/image-20260523142132268.png" alt="image-20260523142132268" style="zoom:22%;" /><img src="img/image-20260523142158650.png" alt="image-20260523142158650" style="zoom:22%;" />
+
 ## 概览
 
 - 框架：Astro 5 + TypeScript
