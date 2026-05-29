@@ -1,5 +1,6 @@
 ---
 import Link from '~/components/base/Link.astro'
+import FriendsApplyPanel from '~/components/views/FriendsApplyPanel.astro'
 import { getGroupedFriendsByCategory } from '~/utils/data'
 
 function getInitial(name: string) {
@@ -23,18 +24,7 @@ const isEmpty = groups.length === 0
           </p>
         </div>
 
-        <aside class="friends-apply">
-          <div class="friends-apply__head">
-            <span class="friends-chip">申请友链</span>
-            <h3>来信即可</h3>
-          </div>
-          <p class="friends-apply__copy">
-            如果你也想把站点放到这里，把站点名称、链接、头像和一句话描述发到我的邮箱。
-          </p>
-          <a class="friends-apply__mail" href="mailto:15088484799@163.com">
-            15088484799@163.com
-          </a>
-        </aside>
+        <FriendsApplyPanel copy="如果你也想把站点放到这里，把站点名称、链接、头像和一句话描述发到我的邮箱。" />
       </section>
     ) : (
       <section class="friends-shell slide-enter">
@@ -93,21 +83,10 @@ const isEmpty = groups.length === 0
           </div>
         </div>
 
-        <aside class="friends-apply">
-          <div class="friends-apply__head">
-            <span class="friends-chip">申请友链</span>
-            <h3>来信即可</h3>
-          </div>
-          <p class="friends-apply__copy">
-            如果你也希望出现在这里，把站点名称、链接、头像和一句话描述发到我的邮箱。
-          </p>
-          <a class="friends-apply__mail" href="mailto:15088484799@163.com">
-            15088484799@163.com
-          </a>
-          <p class="friends-apply__hint">
-            建议顺手附上站点简介，方便我直接整理成卡片。
-          </p>
-        </aside>
+        <FriendsApplyPanel
+          copy="如果你也希望出现在这里，把站点名称、链接、头像和一句话描述发到我的邮箱。"
+          hint="建议顺手附上站点简介，方便我直接整理成卡片。"
+        />
       </section>
     )
   }
@@ -147,7 +126,6 @@ const isEmpty = groups.length === 0
   }
 
   .friends-board,
-  .friends-apply,
   .friends-empty {
     padding: 1.35rem 1.35rem 1.45rem;
     border: 1px solid var(--friends-border);
@@ -287,8 +265,6 @@ const isEmpty = groups.length === 0
 
   .friend-card__label,
   .friend-card__desc,
-  .friends-apply__copy,
-  .friends-apply__hint,
   .friends-empty p,
   .friends-empty h2 {
     margin: 0;
@@ -337,44 +313,6 @@ const isEmpty = groups.length === 0
     font-size: 0.92em;
   }
 
-  .friends-apply {
-    display: grid;
-    gap: 0.75rem;
-    background: var(--friends-panel-bg);
-  }
-
-  .friends-apply__head {
-    display: grid;
-    gap: 0.55rem;
-  }
-
-  .friends-apply__head h3 {
-    margin: 0;
-    font-size: 1.14rem;
-    color: color-mix(in srgb, var(--c-text) 92%, transparent);
-  }
-
-  .friends-apply__copy,
-  .friends-apply__hint {
-    color: var(--friends-muted);
-    font-size: 0.95rem;
-    line-height: 1.75;
-  }
-
-  .friends-apply__mail {
-    width: fit-content;
-    padding: 0.42rem 0.78rem;
-    border: 1px solid var(--friends-border);
-    border-radius: 999px;
-    background: color-mix(in srgb, var(--c-bg) 86%, transparent);
-    color: color-mix(in srgb, var(--c-text) 86%, transparent);
-    font-size: 0.95rem;
-  }
-
-  .friends-apply__mail:hover {
-    border-color: var(--friends-border-strong);
-  }
-
   @media (max-width: 1480px) {
     .friends-page {
       width: min(74vw, 86rem);
@@ -411,7 +349,6 @@ const isEmpty = groups.length === 0
     }
 
     .friends-board,
-    .friends-apply,
     .friends-empty {
       padding: 1rem;
       border-radius: 1.25rem;

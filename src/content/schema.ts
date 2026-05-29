@@ -2,57 +2,6 @@ import { z } from 'astro:content'  // 导入 Zod 验证库
 import type { SchemaContext } from 'astro:content'  // 导入类型定义
 
 /* =====================================================
-   页面 Schema - 用于普通页面（如关于页、首页等）
-   ===================================================== */
-export const pageSchema = z.object({
-  // 页面标题
-  title: z
-    .string()                      // 必须是字符串
-    .default('')                   // 默认值为空字符串
-    .describe(
-      '设置页面标题，会与站点标题组合成"页面标题 - 站点标题"格式用于元数据和 OG 图片生成。' +
-      '如果未定义或为空，只显示站点标题，并跳过 OG 图片生成。'
-    ),
-
-  // 页面副标题
-  subtitle: z
-    .string()
-    .default('')
-    .describe(
-      '页面副标题。如果提供，会显示在标题下方。不需要时留空或删除该字段。'
-    ),
-
-  // SEO 描述
-  description: z
-    .string()
-    .default('')
-    .describe(
-      '简短描述，用于 SEO 和分享的 meta 标签。不需要时留空或删除，将直接使用站点默认描述。'
-    ),
-
-  // 背景类型
-  bgType: z
-    .union([z.literal(false), z.enum(['plum', 'dot', 'rose', 'snow'])])
-    // 可以是 false（无背景）或四种预设类型之一
-    .default(false)
-    .describe(
-      '指定页面是否应用背景及背景类型。不需要时删除或设为 false。' +
-      'plum（李子色）、dot（点状）、rose（玫瑰）、snow（飘雪）'
-    ),
-
-  // Open Graph 社交分享图
-  ogImage: z
-    .union([z.string(), z.boolean()])  // 可以是字符串（图片路径）或布尔值
-    .default(true)                     // 默认 true（自动生成）
-    .describe(
-      '社交分享用的 OG 图片。\n' +
-      '- true：自动生成\n' +
-      '- false：禁用\n' +
-      '- 字符串：使用 /public/og-images/ 下的自定义图片文件名'
-    ),
-})
-
-/* =====================================================
    文章 Schema - 用于博客文章
    ===================================================== */
 export const postSchema = ({ image }: SchemaContext) =>

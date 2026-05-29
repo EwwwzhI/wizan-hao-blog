@@ -1,0 +1,66 @@
+---
+interface Props {
+  copy: string
+  hint?: string
+}
+
+const { copy, hint } = Astro.props
+const email = '15088484799@163.com'
+---
+
+<aside class="friends-apply">
+  <div class="friends-apply__head">
+    <span class="friends-chip">申请友链</span>
+    <h3>来信即可</h3>
+  </div>
+  <p class="friends-apply__copy">{copy}</p>
+  <a class="friends-apply__mail" href={`mailto:${email}`}>
+    {email}
+  </a>
+  {hint && <p class="friends-apply__hint">{hint}</p>}
+</aside>
+
+<style>
+  .friends-apply {
+    display: grid;
+    gap: 0.75rem;
+    background: var(--friends-panel-bg);
+  }
+
+  .friends-apply__head {
+    display: grid;
+    gap: 0.55rem;
+  }
+
+  .friends-apply__head h3,
+  .friends-apply__copy,
+  .friends-apply__hint {
+    margin: 0;
+  }
+
+  .friends-apply__head h3 {
+    font-size: 1.14rem;
+    color: color-mix(in srgb, var(--c-text) 92%, transparent);
+  }
+
+  .friends-apply__copy,
+  .friends-apply__hint {
+    color: var(--friends-muted);
+    font-size: 0.95rem;
+    line-height: 1.75;
+  }
+
+  .friends-apply__mail {
+    width: fit-content;
+    padding: 0.42rem 0.78rem;
+    border: 1px solid var(--friends-border);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--c-bg) 86%, transparent);
+    color: color-mix(in srgb, var(--c-text) 86%, transparent);
+    font-size: 0.95rem;
+  }
+
+  .friends-apply__mail:hover {
+    border-color: var(--friends-border-strong);
+  }
+</style>

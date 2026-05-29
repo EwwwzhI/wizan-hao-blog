@@ -4,15 +4,9 @@ import { defineCollection } from 'astro:content'
 import {
   friendSchema,
   insightSchema,
-  pageSchema,
   postSchema,
   projectSchema,
 } from '~/content/schema'
-
-const pages = defineCollection({
-  loader: glob({ base: './src/pages', pattern: '**/*.mdx' }),
-  schema: pageSchema,
-})
 
 const home = defineCollection({
   loader: glob({ base: './src/content/home', pattern: 'index.{md,mdx}' }),
@@ -39,7 +33,6 @@ const insights = defineCollection({
 })
 
 export const collections = {
-  pages,
   home,
   blogs,
   projects,

@@ -57,7 +57,7 @@ export async function getFilteredPosts(
 export function getSortedPosts(
   posts: CollectionEntry<'blogs'>[]
 ) {
-  return posts.sort(
+  return [...posts].sort(
     (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
   )
 }
@@ -75,19 +75,10 @@ export interface GroupedBlogYear {
   items: GroupedBlogItem[]
 }
 
-export interface FriendData {
-  id: string
-  name: string
-  link: string
-  avatar: string
-  desc: string
-  category: string
-  siteLabel: string
-  order: number
-}
+export type FriendData = CollectionEntry<'friends'>['data']
 
 export interface GroupedFriendItem {
-  id: string
+  id: CollectionEntry<'friends'>['id']
   data: FriendData
 }
 
@@ -172,10 +163,7 @@ export async function getFilteredInsights(
 export async function getSortedFriends(
   collection: 'friends'
 ): Promise<GroupedFriendItem[]> {
-  const items = (await getCollection(collection as never)) as Array<{
-    id: string
-    data: FriendData
-  }>
+  const items = await getCollection(collection)
 
   return items
     .map((item) => ({
@@ -224,7 +212,7 @@ export async function getGroupedFriendsByCategory(
 export function getSortedInsights(
   insights: CollectionEntry<'insights'>[]
 ) {
-  return insights.sort(
+  return [...insights].sort(
     (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
   )
 }
