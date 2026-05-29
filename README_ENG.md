@@ -8,39 +8,43 @@
 [![pnpm](https://img.shields.io/badge/pnpm-10.28-f69220?logo=pnpm&logoColor=white)](https://pnpm.io)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
-A streamlined Astro 5 personal site inspired by the Antfu-style visual language. This repository focuses on a small, opinionated feature set: homepage, blog, projects, insights, and search, while keeping the codebase easy to extend.
+A streamlined Astro 5 personal site inspired by the Antfu-style visual language. This repository focuses on a small, opinionated feature set: homepage, blog, projects, insights, friends, and search, while keeping the codebase easy to extend.
 
-## Home 页面
+## /
 
-<img src="https://raw.githubusercontent.com/wutongyuonce/blogimg/main/img/20260523161839490.png" width="100%" />
+![image-20260529193305258](img/image-20260529193305258.png)
 
-<img src="https://raw.githubusercontent.com/wutongyuonce/blogimg/main/img/20260523161947851.png" width="100%" />
+![image-20260529193326714](img/image-20260529193326714.png)
 
-## Blogs 页面
+## /blogs
 
-<img src="https://raw.githubusercontent.com/wutongyuonce/blogimg/main/img/20260523162131253.png" width="100%" />
+![image-20260529193357228](img/image-20260529193357228.png)
 
-<img src="https://raw.githubusercontent.com/wutongyuonce/blogimg/main/img/20260523162018760.png" width="100%" />
+![image-20260529193413365](img/image-20260529193413365.png)
 
-### blog 单页宽页面
+### /blogs/xxx
 
-<img src="https://raw.githubusercontent.com/wutongyuonce/blogimg/main/img/image-20260523142518201.png" width="100%" />
+![image-20260529193439741](img/image-20260529193439741.png)
 
-### 窄页面
+<img src="img/image-20260529193537037.png" alt="image-20260529193537037" width="70%" />
 
-<img src="https://raw.githubusercontent.com/wutongyuonce/blogimg/main/img/image-20260523142630842.png" width="70%" />
+## /projects
 
-## Projects 页面
+![image-20260529193851772](img/image-20260529193851772.png)
 
-<img src="https://raw.githubusercontent.com/wutongyuonce/blogimg/main/img/20260523162148681.png" width="100%" />
+![image-20260529193807310](img/image-20260529193807310.png)
 
-<img src="https://raw.githubusercontent.com/wutongyuonce/blogimg/main/img/20260523154713480.png" width="100%" />
+## /insights
 
-## Insights 页面
+![image-20260529193920920](img/image-20260529193920920.png)
 
-<img src="https://raw.githubusercontent.com/wutongyuonce/blogimg/main/img/20260523155747853.png" width="100%;" />
+![image-20260529194007306](img/image-20260529194007306.png)
 
-<img src="https://raw.githubusercontent.com/wutongyuonce/blogimg/main/img/20260523155729719.png" width="100%;" />
+## /friends
+
+![image-20260529194107706](img/image-20260529194107706.png)
+
+![image-20260529194037575](img/image-20260529194037575.png)
 
 ## Overview
 
@@ -57,6 +61,7 @@ A streamlined Astro 5 personal site inspired by the Antfu-style visual language.
 - Blog index at `/blogs/` and article pages at `/blogs/[slug]/`
 - Project showcase page at `/projects/`
 - Insights page at `/insights/` with a year-grouped timeline of quotes, reflections, and inspirations, plus expandable preview copy, optional images, and the `snow` background
+- Friends page at `/friends/` with category-grouped link cards, a friend-request section, and light/dark theme support
 - Full-text blog search powered by Pagefind
 - Right-side article TOC for blog detail pages
 - Automatic OG image generation for posts and core pages
@@ -109,6 +114,7 @@ pnpm format:write # format files with Prettier
 | `/blogs/[slug]/` | Blog post detail page |
 | `/projects/` | Project showcase |
 | `/insights/` | Insights page: quotes, reflections, and inspirations in a year-grouped timeline, with expandable preview copy, optional images, and the `snow` background |
+| `/friends/` | Friends page: category-grouped link cards, request instructions, and page-level `cd ..` alignment |
 | `/search/` | Search page powered by Pagefind |
 
 ## Content And Customization
@@ -119,7 +125,8 @@ pnpm format:write # format files with Prettier
 | `src/content/blogs/**/*.{md,mdx}` | Blog posts rendered at `/blogs/` |
 | `src/content/projects/data.json` | Project card data |
 | `src/content/insights/**/*.{md,mdx}` | Insight entries (quotes, reflections, inspirations) |
-| `src/content/schema.ts` | Collection schemas (page, post, project, insight) |
+| `src/content/friends/data.json` | Friends card data |
+| `src/content/schema.ts` | Collection schemas (page, post, project, insight, friend) |
 | `src/config.ts` | Site metadata, nav items, social links, and feature switches |
 | `astro.config.ts` | Astro integrations, Markdown pipeline, image config, and build settings |
 
@@ -138,13 +145,14 @@ src/
     base/         # Head, Link, Footer, Backdrop, PostMeta, Divider
     nav/          # NavBar, NavItem, NavSwitch
     toc/          # Toc, TocSidebar, TocItem
-    views/        # RenderPage, RenderPost, ListView, GroupView, InsightsView
+    views/        # RenderPage, RenderPost, ListView, GroupView, InsightsView, FriendsView
     widgets/      # LogoButton, SearchSwitch, ThemeSwitch, BackLink
   content/
     blogs/        # Blog posts (Markdown / MDX)
     home/         # Homepage content
     projects/     # Project data (JSON)
     insights/     # Insight entries organized by year (Markdown)
+    friends/      # Friends data (JSON)
     schema.ts     # Shared Zod schemas for all content collections
   layouts/        # BaseLayout, StandardLayout
   pages/          # Route definitions
@@ -180,6 +188,7 @@ Project-specific notes are kept in `doc/`:
 
 - `doc/项目解析.md` - Full project architecture and data flow analysis
 - `doc/feature/Insights模块更新说明.md` - Insights module design, content flow, and maintenance guide
+- `doc/feature/友链模块说明.md` - Friends module structure, data flow, and maintenance guide
 - `doc/feature/文章TOC与响应式导航说明.md` - TOC behavior and responsive navigation details
 - `doc/notes/Insights页面展开收起与字体说明.md` - Notes for the latest Insights expand/collapse behavior, typography, and sizing controls
 - `doc/notes/页面调整.md` - Blog reading experience and page-level adjustments
@@ -199,7 +208,7 @@ Removed or excluded parts:
 
 Retained core experience:
 
-- Home, blog, blog detail, projects, insights, and search
+- Home, blog, blog detail, projects, insights, friends, and search
 - Config-driven social links and navbar layout
 - Blog-only search via Pagefind
 - Article TOC on post pages

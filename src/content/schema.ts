@@ -254,11 +254,6 @@ export const friendSchema = z.object({
     .describe('补充说明，用于展示更轻的描述标签。')
     .transform((value) => value.trim()),
 
-  featured: z
-    .boolean()
-    .default(false)
-    .describe('是否为重点展示友链。'),
-
   order: z
     .number()
     .int()

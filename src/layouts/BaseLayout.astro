@@ -28,28 +28,8 @@ interface Props {
 
 const { title, description, ogImage, bgType, pubDate, lastModDate } =
   Astro.props
-const pathname = Astro.url.pathname
-const isInsightsPage = pathname === resolvePath('/insights')
-const isFriendsPage = pathname === resolvePath('/friends')
-const isHomePage = pathname === withBasePath('/')
-
-const footerClasses = ['slide-enter animate-delay-1000! mx-auto print:hidden']
-const footerStyle: Record<string, string> = {
-  marginTop: '2rem',
-}
-
-if (isFriendsPage) {
-  footerClasses.push('w-full')
-  footerStyle.width = 'min(68vw, 90rem)'
-  footerStyle.maxWidth = '100%'
-} else {
-  footerClasses.push('prose')
-}
-
-if (isInsightsPage) {
-  footerStyle.width = '100%'
-  footerStyle.maxWidth = '75rem'
-}
+const isInsightsPage = Astro.url.pathname === resolvePath('/insights')
+const isFriendsPage = Astro.url.pathname === resolvePath('/friends')
 
 let style: Record<string, string> = {}
 
@@ -97,10 +77,22 @@ if (hasCustomCursor) style['--external-link-cursor'] = cursorType
       <!-- Content -->
       <slot />
       {
-        !isHomePage && (
+        Astro.url.pathname !== withBasePath('/') && (
           <footer
-            class:list={footerClasses}
-            style={footerStyle}
+            class:list={[
+              'slide-enter animate-delay-1000! mx-auto print:hidden',
+              !isFriendsPage && 'prose mt-8',
+              isInsightsPage && 'w-full max-w-300',
+              isFriendsPage && 'w-full mt-14',
+            ]}
+            style={
+              isFriendsPage
+                ? {
+                    width: 'min(68vw, 90rem)',
+                    maxWidth: '100%',
+                  }
+                : undefined
+            }
           >
             <BackLink />
           </footer>

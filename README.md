@@ -1,6 +1,6 @@
 # Wutong-Yu-Blog
 
-[English](README_ENG.md) | [1w5+博客项目解析，深入了解 Astro](doc/)
+[English](README_ENG.md) | [1w5+字数博客项目解析，深入了解 Astro](doc/)
 
 [![Astro](https://img.shields.io/badge/Astro-5-ff5a03?logo=astro&logoColor=white)](https://astro.build)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178c6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
@@ -10,39 +10,45 @@
 [![pnpm](https://img.shields.io/badge/pnpm-10.28-f69220?logo=pnpm&logoColor=white)](https://pnpm.io)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
-一个精简的 Astro 5 个人站点，视觉风格受 Antfu 风格启发。专注于一个小而精的功能集：首页 Home、博客 Blogs、项目 Projects、启发 Insights 和搜索 Search，保持代码库易于扩展。
+一个精简的 Astro 5 个人站点，视觉风格受 Antfu 风格启发。专注于一个小而精的功能集：首页 Home、博客 Blogs、项目 Projects、启发 Insights、友链 Friends 和搜索 Search，保持代码库易于扩展。
 
 ## Home 页面
 
-<img src="https://raw.githubusercontent.com/wutongyuonce/blogimg/main/img/20260523161839490.png" width="100%" />
+![image-20260529193305258](img/image-20260529193305258.png)
 
-<img src="https://raw.githubusercontent.com/wutongyuonce/blogimg/main/img/20260523161947851.png" width="100%" />
+![image-20260529193326714](img/image-20260529193326714.png)
 
 ## Blogs 页面
 
-<img src="https://raw.githubusercontent.com/wutongyuonce/blogimg/main/img/20260523162131253.png" width="100%" />
+![image-20260529193357228](img/image-20260529193357228.png)
 
-<img src="https://raw.githubusercontent.com/wutongyuonce/blogimg/main/img/20260523162018760.png" width="100%" />
+![image-20260529193413365](img/image-20260529193413365.png)
 
 ### blog 单页宽页面
 
-<img src="https://raw.githubusercontent.com/wutongyuonce/blogimg/main/img/image-20260523142518201.png" width="100%" />
+![image-20260529193439741](img/image-20260529193439741.png)
 
 ### 窄页面
 
-<img src="https://raw.githubusercontent.com/wutongyuonce/blogimg/main/img/image-20260523142630842.png" width="70%" />
+<img src="img/image-20260529193537037.png" alt="image-20260529193537037" width="70%" />
 
 ## Projects 页面
 
-<img src="https://raw.githubusercontent.com/wutongyuonce/blogimg/main/img/20260523162148681.png" width="100%" />
+![image-20260529193851772](img/image-20260529193851772.png)
 
-<img src="https://raw.githubusercontent.com/wutongyuonce/blogimg/main/img/20260523154713480.png" width="100%" />
+![image-20260529193807310](img/image-20260529193807310.png)
 
 ## Insights 页面
 
-<img src="https://raw.githubusercontent.com/wutongyuonce/blogimg/main/img/20260523155747853.png" width="100%;" />
+![image-20260529193920920](img/image-20260529193920920.png)
 
-<img src="https://raw.githubusercontent.com/wutongyuonce/blogimg/main/img/20260523155729719.png" width="100%;" />
+![image-20260529194007306](img/image-20260529194007306.png)
+
+## Friends 页面
+
+![image-20260529194107706](img/image-20260529194107706.png)
+
+![image-20260529194037575](img/image-20260529194037575.png)
 
 ## 概览
 
@@ -59,6 +65,7 @@
 - 博客索引 `/blogs/` 与文章页 `/blogs/[slug]/`
 - 项目展示页 `/projects/`
 - Insights 页 `/insights/`，按年份分组的时间线展示语录、启发与反思，支持正文预览展开、可选配图和 `snow` 背景
+- Friends 页 `/friends/`，按分类展示友链卡片，包含申请友链说明区块，并适配明暗主题
 - 基于 Pagefind 的博客全文搜索
 - 文章详情页右侧目录
 - 文章与核心页面的自动 OG 图片生成
@@ -111,6 +118,7 @@ pnpm format:write # 格式化代码（Prettier）
 | `/blogs/[slug]/` | 博客文章详情页 |
 | `/projects/` | 项目展示页 |
 | `/insights/` | Insights 页：按年份时间线展示语录、启发与反思，支持正文预览展开、可选配图与 `snow` 背景 |
+| `/friends/` | Friends 页：按分类展示友情链接卡片，支持申请友链说明与页面级 `cd ..` 对齐 |
 | `/search/` | 基于 Pagefind 的搜索页 |
 
 ## 内容与定制
@@ -121,7 +129,8 @@ pnpm format:write # 格式化代码（Prettier）
 | `src/content/blogs/**/*.{md,mdx}` | 博客文章，渲染在 `/blogs/` 下 |
 | `src/content/projects/data.json` | 项目卡片数据 |
 | `src/content/insights/**/*.{md,mdx}` | Insight 条目（语录、启发、反思） |
-| `src/content/schema.ts` | 内容集合的 schema 定义（页面、文章、项目、Insight） |
+| `src/content/friends/data.json` | 友链卡片数据 |
+| `src/content/schema.ts` | 内容集合的 schema 定义（页面、文章、项目、Insight、Friend） |
 | `src/config.ts` | 站点元信息、导航项、社交链接与功能开关 |
 | `astro.config.ts` | Astro 集成配置、Markdown 管线、图片优化与构建设置 |
 
@@ -140,13 +149,14 @@ src/
     base/         # Head, Link, Footer, Backdrop, PostMeta, Divider
     nav/          # NavBar, NavItem, NavSwitch
     toc/          # Toc, TocSidebar, TocItem
-    views/        # RenderPage, RenderPost, ListView, GroupView, InsightsView
+    views/        # RenderPage, RenderPost, ListView, GroupView, InsightsView, FriendsView
     widgets/      # LogoButton, SearchSwitch, ThemeSwitch, BackLink
   content/
     blogs/        # 博客文章（Markdown / MDX）
     home/         # 首页内容
     projects/     # 项目数据（JSON）
     insights/     # Insight 条目，按年份归档（Markdown）
+    friends/      # 友链数据（JSON）
     schema.ts     # 所有内容集合的 Zod schema 定义
   layouts/        # BaseLayout, StandardLayout
   pages/          # 路由定义
@@ -182,6 +192,7 @@ src/components/* + styles/*  -> 最终 UI 输出
 
 - `doc/项目解析.md` — 完整的项目架构与数据流分析
 - `doc/feature/Insights模块更新说明.md` — Insights 模块设计、内容链路与维护指南
+- `doc/feature/友链模块说明.md` — Friends 模块结构、数据链路与维护说明
 - `doc/feature/文章TOC与响应式导航说明.md` — 目录行为与响应式导航细节
 - `doc/notes/Insights页面展开收起与字体说明.md` — Insights 页面最近的展开收起、字体与排版说明
 - `doc/notes/页面调整.md` — 博客阅读体验与页面级调整
@@ -201,7 +212,7 @@ src/components/* + styles/*  -> 最终 UI 输出
 
 保留的核心体验：
 
-- 首页、博客列表、博客详情、项目展示、Insights 和搜索
+- 首页、博客列表、博客详情、项目展示、Insights、Friends 和搜索
 - 基于配置文件驱动的社交链接与导航栏布局
 - 仅限博客的 Pagefind 搜索
 - 文章页目录

@@ -83,7 +83,6 @@ export interface FriendData {
   desc: string
   category: string
   siteLabel: string
-  featured: boolean
   order: number
 }
 
@@ -184,10 +183,6 @@ export async function getSortedFriends(
       data: item.data,
     }))
     .sort((a, b) => {
-      if (a.data.featured !== b.data.featured) {
-        return a.data.featured ? -1 : 1
-      }
-
       if (a.data.order !== b.data.order) {
         return a.data.order - b.data.order
       }
