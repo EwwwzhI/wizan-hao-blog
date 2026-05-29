@@ -5,7 +5,6 @@ import { mkdir } from 'node:fs/promises'
 import { decode } from 'html-entities'
 import satori from 'satori'
 import sharp from 'sharp'
-import chalk from 'chalk'
 
 import { getCurrentFormattedTime } from '../src/utils/datetime'
 import { ogImageMarkup } from './og-template/markup'
@@ -47,6 +46,14 @@ const satoriOptions: SatoriOptions = {
       data: Inter,
     },
   ],
+}
+
+function logWithTime(level: 'info' | 'warn' | 'error', message: string) {
+  const timestamp = getCurrentFormattedTime()
+  const prefix = level === 'info' ? '' : `[${level.toUpperCase()}] `
+  const logger = level === 'error' ? console.error : level === 'warn' ? console.warn : console.log
+
+  logger(`${timestamp} ${prefix}${message}`)
 }
 
 /**
@@ -92,9 +99,7 @@ async function generateOgImage(
 ) {
   await mkdir(dirname(output), { recursive: true })
 
-  console.log(
-    `${chalk.black(getCurrentFormattedTime())} ${chalk.green(`Generating ${output}...`)}`
-  )
+  logWithTime('info', `Generating ${output}...`)
 
   try {
     const node = ogImageMarkup(authorOrBrand, title, bgType)
@@ -111,9 +116,7 @@ async function generateOgImage(
 
     writeFileSync(output, compressedPngBuffer)
   } catch (e) {
-    console.error(
-      `${chalk.black(getCurrentFormattedTime())} ${chalk.red(`[ERROR] Failed to generate og image for '${basename(output)}'.`)}`
-    )
+    logWithTime('error', `Failed to generate og image for '${basename(output)}'.`)
     console.error(e)
   }
 }
@@ -184,8 +187,9 @@ function remarkGenerateOgImage() {
       customOgImage &&
       !checkFileExistsInDir('public/og-images', basename(customOgImage))
     ) {
-      console.warn(
-        `${chalk.black(getCurrentFormattedTime())} ${chalk.yellow(`[WARN] The '${customOgImage}' specified in '${astroFile.path}' was not found.`)}\n  ${chalk.bold('Hint:')} Put the file under ${chalk.cyan('public/og-images/')} or set ${chalk.cyan('ogImage: true')} to auto-generate it.`
+      logWithTime(
+        'warn',
+        `The '${customOgImage}' specified in '${astroFile.path}' was not found.\n  Hint: Put the file under public/og-images/ or set ogImage: true to auto-generate it.`
       )
       return
     }

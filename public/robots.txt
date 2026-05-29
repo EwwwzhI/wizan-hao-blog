@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://wutongyu.site/sitemap-index.xml

@@ -1,6 +1,5 @@
 import { defineConfig } from 'astro/config'  // 导入 Astro 配置定义函数
 import sitemap from '@astrojs/sitemap'       // 自动生成 sitemap.xml（网站地图，告诉搜索引擎网站结构）
-import robotsTxt from 'astro-robots-txt'     // 自动生成 robots.txt（告诉搜索引擎抓取规则）
 import unocss from 'unocss/astro'            // UnoCSS 原子化 CSS 引擎（按需生成 CSS 工具类）
 import astroExpressiveCode from 'astro-expressive-code'  // 代码块美化插件（语法高亮、主题等）
 import mdx from '@astrojs/mdx'               // MDX 支持（在 Markdown 中使用 JSX 组件）
@@ -31,7 +30,6 @@ export default defineConfig({
   // integrations 数组中的插件会在构建时按顺序执行
   integrations: [
     sitemap(),          // 生成 sitemap.xml，帮助 SEO
-    robotsTxt(),        // 生成 robots.txt，控制搜索引擎抓取
     unocss({
       injectReset: true  // 注入 CSS 重置样式（normalize.css）
     }),

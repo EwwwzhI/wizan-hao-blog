@@ -36,12 +36,9 @@ body {
   --uno: 'outline-none ring-3 ring-[#8884] ring-offset-2 ring-offset-[var(--c-bg)]';
 }
 
-/* NProgress */
-#nprogress {
+/* Page progress bar */
+#page-progress-bar {
   pointer-events: none;
-}
-
-#nprogress .bar {
   z-index: 50;
   position: fixed;
   top: 0;
@@ -52,6 +49,19 @@ body {
 
   background: #888;
   opacity: 0.75;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition:
+    transform 220ms ease,
+    opacity 220ms ease;
+}
+
+#page-progress-bar[data-loading='true'] {
+  transform: scaleX(0.92);
+}
+
+#page-progress-bar[data-loading='false'] {
+  opacity: 0;
 }
 
 /* Scrollbar */

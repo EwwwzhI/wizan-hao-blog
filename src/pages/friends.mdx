@@ -1,0 +1,22 @@
+---
+title: 友情链接
+subtitle: 记录那些愿意长期互相访问、彼此欣赏的网站与博客
+description: 浏览我的友链列表，查看值得反复回访的博客、个人主页与独立站点
+bgType: false
+ogImage: true
+---
+
+import BaseLayout from '~/layouts/BaseLayout.astro'
+import StandardLayout from '~/layouts/StandardLayout.astro'
+import FriendsView from '~/components/views/FriendsView.astro'
+
+<BaseLayout
+  title={frontmatter.title}
+  description={frontmatter.description}
+  bgType={frontmatter.bgType}
+  ogImage={frontmatter.ogImage}
+>
+  <StandardLayout title={frontmatter.title} subtitle={frontmatter.subtitle} isCentered={true}>
+    <FriendsView />
+  </StandardLayout>
+</BaseLayout>

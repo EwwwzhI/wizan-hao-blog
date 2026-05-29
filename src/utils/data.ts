@@ -75,6 +75,28 @@ export interface GroupedBlogYear {
   items: GroupedBlogItem[]
 }
 
+export interface FriendData {
+  id: string
+  name: string
+  link: string
+  avatar: string
+  desc: string
+  category: string
+  siteLabel: string
+  featured: boolean
+  order: number
+}
+
+export interface GroupedFriendItem {
+  id: string
+  data: FriendData
+}
+
+export interface GroupedFriendCategory {
+  category: string
+  items: GroupedFriendItem[]
+}
+
 export interface GroupedInsightItem {
   idx: number
   year: string
@@ -143,6 +165,62 @@ export async function getFilteredInsights(
   return await getCollection(collection, ({ data }) => {
     return import.meta.env.PROD ? !data.draft : true
   })
+}
+
+/**
+ * Retrieves sorted friends from the specified content collection.
+ */
+export async function getSortedFriends(
+  collection: 'friends'
+): Promise<GroupedFriendItem[]> {
+  const items = (await getCollection(collection as never)) as Array<{
+    id: string
+    data: FriendData
+  }>
+
+  return items
+    .map((item) => ({
+      id: item.id,
+      data: item.data,
+    }))
+    .sort((a, b) => {
+      if (a.data.featured !== b.data.featured) {
+        return a.data.featured ? -1 : 1
+      }
+
+      if (a.data.order !== b.data.order) {
+        return a.data.order - b.data.order
+      }
+
+      return a.data.name.localeCompare(b.data.name, 'zh-Hans-CN')
+    })
+}
+
+/**
+ * Retrieves all friends and groups them by category.
+ */
+export async function getGroupedFriendsByCategory(
+  collection: 'friends'
+): Promise<GroupedFriendCategory[]> {
+  const items = await getSortedFriends(collection)
+
+  return items.reduce<GroupedFriendCategory[]>((groups, item) => {
+    const existingGroup = groups.find(
+      (group) => group.category === item.data.category
+    )
+
+    if (existingGroup) {
+      existingGroup.items.push(item)
+      return groups
+    }
+
+    groups.push({
+      category: item.data.category,
+      items: [item],
+    })
+
+    return groups
+  }, [])
 }
 
 /**

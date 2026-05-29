@@ -38,6 +38,12 @@ export const UI: Ui = {
       displayMode: 'alwaysText',
       text: 'Insights',
     },
+    {
+      path: '/friends',
+      title: 'Friends',
+      displayMode: 'alwaysText',
+      text: 'Friends',
+    },
   ],
   socialLinks: [
     {

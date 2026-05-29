@@ -2,6 +2,7 @@ import { glob, file } from 'astro/loaders'
 import { defineCollection } from 'astro:content'
 
 import {
+  friendSchema,
   insightSchema,
   pageSchema,
   postSchema,
@@ -27,6 +28,11 @@ const projects = defineCollection({
   schema: projectSchema,
 })
 
+const friends = defineCollection({
+  loader: file('./src/content/friends/data.json'),
+  schema: friendSchema,
+})
+
 const insights = defineCollection({
   loader: glob({ base: './src/content/insights', pattern: '**/*.{md,mdx}' }),
   schema: insightSchema,
@@ -37,5 +43,6 @@ export const collections = {
   home,
   blogs,
   projects,
+  friends,
   insights,
 }

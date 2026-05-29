@@ -28,7 +28,28 @@ interface Props {
 
 const { title, description, ogImage, bgType, pubDate, lastModDate } =
   Astro.props
-const isInsightsPage = Astro.url.pathname === resolvePath('/insights')
+const pathname = Astro.url.pathname
+const isInsightsPage = pathname === resolvePath('/insights')
+const isFriendsPage = pathname === resolvePath('/friends')
+const isHomePage = pathname === withBasePath('/')
+
+const footerClasses = ['slide-enter animate-delay-1000! mx-auto print:hidden']
+const footerStyle: Record<string, string> = {
+  marginTop: '2rem',
+}
+
+if (isFriendsPage) {
+  footerClasses.push('w-full')
+  footerStyle.width = 'min(68vw, 90rem)'
+  footerStyle.maxWidth = '100%'
+} else {
+  footerClasses.push('prose')
+}
+
+if (isInsightsPage) {
+  footerStyle.width = '100%'
+  footerStyle.maxWidth = '75rem'
+}
 
 let style: Record<string, string> = {}
 
@@ -76,12 +97,10 @@ if (hasCustomCursor) style['--external-link-cursor'] = cursorType
       <!-- Content -->
       <slot />
       {
-        Astro.url.pathname !== withBasePath('/') && (
+        !isHomePage && (
           <footer
-            class:list={[
-              'slide-enter animate-delay-1000! prose mx-auto mt-8 print:hidden',
-              isInsightsPage && 'w-full max-w-300',
-            ]}
+            class:list={footerClasses}
+            style={footerStyle}
           >
             <BackLink />
           </footer>
@@ -98,14 +117,30 @@ if (hasCustomCursor) style['--external-link-cursor'] = cursorType
 
     <!-- Progress Bar -->
     <script>
-      import nprogress from 'nprogress'
+      const PROGRESS_ID = 'page-progress-bar'
+
+      const getProgressBar = () => {
+        const existingBar = document.getElementById(PROGRESS_ID)
+        if (existingBar) return existingBar
+
+        const bar = document.createElement('div')
+        bar.id = PROGRESS_ID
+        bar.setAttribute('aria-hidden', 'true')
+        document.body.append(bar)
+        return bar
+      }
+
+      const setProgressState = (loading: boolean) => {
+        const bar = getProgressBar()
+        bar.dataset.loading = loading ? 'true' : 'false'
+      }
 
       document.addEventListener('astro:before-preparation', () => {
-        nprogress.start()
+        setProgressState(true)
       })
 
       document.addEventListener('astro:page-load', () => {
-        nprogress.done()
+        setProgressState(false)
       })
     </script>
   </body>

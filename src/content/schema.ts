@@ -214,6 +214,59 @@ export const projectSchema = z.object({
 })
 
 /* =====================================================
+   Friend Schema - 用于友链展示
+   ===================================================== */
+export const friendSchema = z.object({
+  id: z
+    .string()
+    .describe('**必填**。友链唯一标识，用于数据维护。')
+    .transform((value) => value.trim()),
+
+  name: z
+    .string()
+    .describe('**必填**。站点名称。')
+    .transform((value) => value.trim()),
+
+  link: z
+    .string()
+    .url('无效的 URL 格式。')
+    .describe('**必填**。友链站点地址。'),
+
+  avatar: z
+    .string()
+    .default('')
+    .describe('头像图片地址。支持 https URL 或 /public 下的绝对路径。')
+    .transform((value) => value.trim()),
+
+  desc: z
+    .string()
+    .describe('**必填**。站点简介。')
+    .transform((value) => value.trim()),
+
+  category: z
+    .string()
+    .describe('**必填**。友链所属分组。')
+    .transform((value) => value.trim()),
+
+  siteLabel: z
+    .string()
+    .default('')
+    .describe('补充说明，用于展示更轻的描述标签。')
+    .transform((value) => value.trim()),
+
+  featured: z
+    .boolean()
+    .default(false)
+    .describe('是否为重点展示友链。'),
+
+  order: z
+    .number()
+    .int()
+    .default(999)
+    .describe('同组内排序值，数值越小越靠前。'),
+})
+
+/* =====================================================
    Insight Schema - 用于语录/启发/哲理内容
    ===================================================== */
 export const insightSchema = z.object({

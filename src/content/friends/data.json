@@ -1,0 +1,68 @@
+[
+  {
+    "id": "anthony-fu",
+    "name": "Anthony Fu",
+    "link": "https://antfu.me/",
+    "avatar": "https://github.com/antfu.png?size=96",
+    "desc": "Vue、Vite 与开源生态的长期建设者。",
+    "category": "大佬们",
+    "siteLabel": "站在巨人的肩膀上",
+    "featured": true,
+    "order": 1
+  },
+  {
+    "id": "pseudoyu",
+    "name": "pseudoyu",
+    "link": "https://www.pseudoyu.com/",
+    "avatar": "https://github.com/Pseudoyu.png?size=96",
+    "desc": "独立开发、区块链与长期写作的交汇点。",
+    "category": "大佬们",
+    "siteLabel": "Web3 / 写作 / Indie",
+    "featured": true,
+    "order": 2
+  },
+  {
+    "id": "sxzz",
+    "name": "sxzz",
+    "link": "https://sxzz.moe/",
+    "avatar": "https://github.com/sxzz.png?size=96",
+    "desc": "前端工程、工具链和社区实践的高质量输出。",
+    "category": "常逛站点",
+    "siteLabel": "前端工程向",
+    "featured": true,
+    "order": 1
+  },
+  {
+    "id": "ruanyifeng",
+    "name": "阮一峰的网络日志",
+    "link": "https://www.ruanyifeng.com/blog/",
+    "avatar": "",
+    "desc": "长期更新的技术随笔与周刊，是很多人的固定入口。",
+    "category": "常逛站点",
+    "siteLabel": "技术周刊入口",
+    "featured": false,
+    "order": 2
+  },
+  {
+    "id": "overreacted",
+    "name": "Overreacted",
+    "link": "https://overreacted.io/",
+    "avatar": "",
+    "desc": "Dan Abramov 的个人博客，适合反复阅读的长文站点。",
+    "category": "常逛站点",
+    "siteLabel": "值得反复回看",
+    "featured": false,
+    "order": 3
+  },
+  {
+    "id": "yihong0618",
+    "name": "yihong0618",
+    "link": "https://yihong0618.com/",
+    "avatar": "https://github.com/yihong0618.png?size=96",
+    "desc": "旅行、编程、播客与真实生活记录。",
+    "category": "独立博客",
+    "siteLabel": "自由生长的记录感",
+    "featured": true,
+    "order": 1
+  }
+]
