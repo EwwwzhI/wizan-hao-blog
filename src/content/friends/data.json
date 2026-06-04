@@ -20,33 +20,13 @@
     "order": 2
   },
   {
-    "id": "sxzz",
-    "name": "sxzz",
-    "link": "https://sxzz.moe/",
-    "avatar": "https://github.com/sxzz.png?size=96",
-    "desc": "前端工程、工具链和社区实践的高质量输出。",
-    "category": "常逛站点",
-    "siteLabel": "前端工程向",
-    "order": 1
-  },
-  {
     "id": "ruanyifeng",
     "name": "阮一峰的网络日志",
     "link": "https://www.ruanyifeng.com/blog/",
     "avatar": "",
     "desc": "长期更新的技术随笔与周刊，是很多人的固定入口。",
-    "category": "常逛站点",
+    "category": "大佬们",
     "siteLabel": "技术周刊入口",
-    "order": 2
-  },
-  {
-    "id": "overreacted",
-    "name": "Overreacted",
-    "link": "https://overreacted.io/",
-    "avatar": "",
-    "desc": "Dan Abramov 的个人博客，适合反复阅读的长文站点。",
-    "category": "常逛站点",
-    "siteLabel": "值得反复回看",
     "order": 3
   },
   {
@@ -57,5 +37,14 @@
     "desc": "全栈偏后端，写技术也写生活。",
     "category": "独立博客",
     "order": 1
+  },
+  {
+    "id": "huizhi's Aside",
+    "name": "huizhi's Aside",
+    "link": "https://blog.huizhi.ink",
+    "avatar": "https://github.com/huizhiLLL.png",
+    "desc": "也许只是些碎碎念吧。",
+    "category": "独立博客",
+    "order": 2
   }
 ]
