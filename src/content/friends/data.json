@@ -46,5 +46,23 @@
     "desc": "也许只是些碎碎念吧。",
     "category": "独立博客",
     "order": 2
+  },
+  {
+    "id": "Seeridia's Home",
+    "name": "Seeridia's Home",
+    "link": "https://blog.seeridia.top",
+    "avatar": "https://www.github.com/Seeridia.png",
+    "desc": "Seeridia 的小小小的大窝！",
+    "category": "独立博客",
+    "order": 3
+  },
+  {
+    "id": "miuo's blog",
+    "name": "miuo's blog",
+    "link": "https://blog.miuo.me",
+    "avatar": "https://blog.miuo.me/avatar.avif",
+    "desc": "记录文章、笔记、实验和暂时不想丢掉的内容。",
+    "category": "独立博客",
+    "order": 4
   }
 ]

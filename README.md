@@ -219,3 +219,5 @@ src/components/* + styles/*  -> 最终 UI 输出
 - 明暗主题切换与视图转场
 - 活跃页面与文章的 OG 图片自动生成
 - 多种背景效果（`plum`、`dot`、`rose`、`snow`）
+
+MIT

@@ -215,3 +215,5 @@ Retained core experience:
 - Theme switching with view transitions
 - OG image generation for active pages and posts
 - Multiple background effects (`plum`, `dot`, `rose`, `snow`)
+
+MIT
