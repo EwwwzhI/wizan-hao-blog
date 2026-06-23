@@ -28,3 +28,6 @@ pnpm-debug.log*
 
 # local archive
 .local
+
+# ai md
+AGENTS.md

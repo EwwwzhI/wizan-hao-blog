@@ -39,7 +39,7 @@ const projectIcons = (projecstData as Array<{ icon: string }>).map(
 )
 
 export default defineConfig({
-  // Astro 5 no longer pipes `src/content/**/*.{md,mdx}` through Vite
+  // Astro does not pipe `src/content/**/*.{md,mdx}` through Vite by default.
   content: {
     filesystem: ['./src/{content,pages,layouts}/**/*.{md,mdx,astro}'],
   },

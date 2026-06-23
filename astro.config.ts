@@ -1,4 +1,5 @@
 import { defineConfig } from 'astro/config'  // 导入 Astro 配置定义函数
+import { unified } from '@astrojs/markdown-remark' // Astro v6 Markdown 处理器
 import sitemap from '@astrojs/sitemap'       // 自动生成 sitemap.xml（网站地图，告诉搜索引擎网站结构）
 import unocss from 'unocss/astro'            // UnoCSS 原子化 CSS 引擎（按需生成 CSS 工具类）
 import astroExpressiveCode from 'astro-expressive-code'  // 代码块美化插件（语法高亮、主题等）
@@ -40,8 +41,10 @@ export default defineConfig({
   // ==================== Markdown 配置 ====================
   markdown: {
     syntaxHighlight: false,     // 禁用 Astro 内置语法高亮（交给 expressive-code 处理）
-    remarkPlugins,              // Remark 插件（处理 Markdown 语法树，如添加目录）
-    rehypePlugins,             // Rehype 插件（处理 HTML 树，如优化图片）
+    processor: unified({
+      remarkPlugins,            // Remark 插件（处理 Markdown 语法树，如添加目录）
+      rehypePlugins,            // Rehype 插件（处理 HTML 树，如优化图片）
+    }),
   },
 
   // ==================== 图片优化配置 ====================
@@ -68,13 +71,14 @@ export default defineConfig({
     },
   },
 
+  // ==================== 预渲染配置 ====================
+  // Astro v6 中 experimental.failOnPrerenderConflict 已转为正式配置
+  prerenderConflictBehavior: 'error',
+
   // ==================== 实验性功能 ====================
-  // 这些功能可能在正式版本中默认启用，目前需要手动开启
+  // 仅保留 Astro v6 仍支持的实验性功能
   experimental: {
     contentIntellisense: true,    // 内容集合智能提示（在 Markdown 中自动补全）
-    preserveScriptOrder: true,    // 保留 script 标签顺序（影响组件执行顺序）
-    headingIdCompat: true,        // 标题 ID 兼容模式（确保锚点链接正确）
     chromeDevtoolsWorkspace: true, // Chrome DevTools 工作区支持（可在浏览器中编辑并保存）
-    failOnPrerenderConflict: true, // 预渲染冲突时失败（严格模式，避免错误）
   },
 })

@@ -1,30 +1,14 @@
-Hello! I'm ***WutongYu***. This is my personal website, which is inspired by *[lin-stephanie](https://github.com/lin-stephanie)‘s [astro-antfustyle-theme](https://github.com/lin-stephanie/astro-antfustyle-theme)*. 
+你好，我是 ***EwwwzhI***。
 
-It's also an open-source Astro theme available for anyone to use. Detailed documentation is placed under the [/doc](https://github.com/wutongyuonce/wutong-yu-blog/tree/main/doc) folder.
+这里是我的个人档案站，用来放博客、项目和一些长期维护的技术笔记。仓库已经收敛成一个更适合个人使用的简洁版本：少一点展示型模块，多一点可维护性。
 
-I'm an student at :link[Hohai University]{id=https://www.hhu.edu.cn .square}. Recently i'm applying for Msc cs at :link[HKU]{id=https://www.hku.hk .square} / :link[CUHK]{id=https://www.cuhk.edu.hk img=/cuhk.png .square} / :link[HKUST]{id=https://hkust.edu.hk .square}.
+***关注方向***：:link[Java]{id=https://www.java.com/zh-CN/ .square} :link[TypeScript]{id=https://www.typescriptlang.org .square} :link[Python]{id=https://www.python.org .square} :link[Astro]{id=https://astro.build .square} :link[Agent]{id=https://openai.com .square}
 
-I'm also looking for an *INTERN* opportunity regarding *backend/agent engineering*. You can visit and download ***[my resume here]()***.
+你可以从这里开始：
 
-<br>
-
-***Coding Languages includes***: :link[Java]{id=https://www.java.com/zh-CN/ .square} :link[TS]{id=https://www.typescriptlang.org .square} :link[Golang]{id=https://golang.google.cn .square} :link[Python]{id=https://www.python.org .square} :link[SQL]{id=https://www.mysql.com/cn/ .square}
-
-***Working on***: :link[Agent]{id=https://claude.com/product/claude-code .square} :link[SpingBoot]{id=https://spring.io/projects/spring-boot .square} :link[SpingCloud]{id=https://spring.io/projects/spring-cloud .square} :link[Vue]{id=https://vuejs.org img=/vue.png .square}
-
-<br>
-
-You can see ***[all my blogs list here](https://wutongyu.site/blogs/) (tech stack notes and random blogs)***.
-
-You can see ***[all my projects list here](https://wutongyu.site/projects/)***.
-
-<br>
-
-Beyond programming, I enjoy playing fps games like *Valorant* and also *Steam* games.
-
-I'm alse a fan of kpop groups like *:link[TWICE]{id=https://twice.jype.com} / :link[Idle]{id=https://www.instagram.com/i_dle_official/}*.
-
-I have got a *7.5* score in *IELTS*, so if you are a native speaker, feel free to chat with me on social media.
+- 查看 [博客列表](/blogs/)
+- 查看 [项目列表](/projects/)
+- 在右上角使用搜索查找博客内容
 
 ---
 
@@ -33,12 +17,5 @@ I have got a *7.5* score in *IELTS*, so if you are a native speaker, feel free t
   <span class="inline-flex flex-wrap gap-2 op-75">
     <a href="https://github.com/wutongyuonce">
       <span i-simple-icons-github></span> GitHub</a>
-    <a href="https://www.instagram.com/wutongyu0730">
-      <span i-simple-icons-instagram></span> Instagram</a>
-    <a href="https://space.bilibili.com/521627597">
-      <span i-simple-icons-bilibili></span> Bilibili</a>
   </span>
 </p>
-
-
-Or mail me via ***15088484799@163.com***

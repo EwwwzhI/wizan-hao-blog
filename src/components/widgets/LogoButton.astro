@@ -12,14 +12,8 @@ import { SITE } from '~/config'
 >
   <div class="logo-container">
     <img
-      class="logo-icon img-light"
-      src={withBasePath('/cat-icon-2.svg')}
-      alt=""
-      aria-hidden="true"
-    />
-    <img
-      class="logo-icon img-dark"
-      src={withBasePath('/cat-icon.svg')}
+      class="logo-icon"
+      src={withBasePath('/ewwwzhi.svg')}
       alt=""
       aria-hidden="true"
     />
@@ -29,36 +23,30 @@ import { SITE } from '~/config'
 <style>
   .logo-container {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    transform: scale(1.05);
+    width: 9.25rem;
+    height: 3.0rem;
+    overflow: visible;
   }
 
   @media (max-width: 767.9px) {
     .logo-container {
       margin-top: 0.125rem;
-
-      transform-origin: 0%;
-      transform: scale(0.95);
+      width: 7.25rem;
+      height: 2.1rem;
     }
   }
 
   .logo-icon {
-    width: 3rem;
-    height: 3rem;
+    width: 100%;
+    height: 100%;
     display: block;
-    object-fit: cover;
+    object-fit: contain;
+    object-position: left center;
   }
 
-  .img-dark {
-    display: none;
-  }
-
-  :global(html.dark) .img-light {
-    display: none;
-  }
-
-  :global(html.dark) .img-dark {
-    display: block;
+  :global(html.dark) .logo-icon {
+    filter: invert(1);
   }
 </style>

@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="180" viewBox="0 0 520 180" fill="none">
+  <g transform="translate(0,0) " stroke="#000000" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M24 22 V98"/>
+    <path d="M26 22 H60"/>
+    <path d="M26 60 H55"/>
+    <path d="M26 98 H60"/>
+
+    <g transform="translate(95,0)">
+      <path d="M4 24 V36"/>
+      <path d="M38 24 V36"/>
+      <path d="M4 54 V76"/>
+      <path d="M21 54 V96"/>
+      <path d="M38 54 V76"/>
+      <path d="M4 76 V82 Q4 98 19 98 H23 Q38  98 38 82 V76"/>
+    </g>
+
+    <g transform="translate(165,0)">
+      <path d="M4 24 V36"/>
+      <path d="M38 24 V36"/>
+      <path d="M4 54 V76"/>
+      <path d="M21 54 V96"/>
+      <path d="M38 54 V76"/>
+      <path d="M4 76 V82 Q4 98 19 98 H23 Q38  98 38 82 V76"/>
+    </g>
+
+    <g transform="translate(235,0)">
+      <path d="M4 24 V36"/>
+      <path d="M38 24 V36"/>
+      <path d="M4 54 V76"/>
+      <path d="M21 54 V96"/>
+      <path d="M38 54 V76"/>
+      <path d="M4 76 V82 Q4 98 19 98 H23 Q38  98 38 82 V76"/>
+    </g>
+
+    <g transform="translate(305,0)">
+      <path d="M4 24 H38 Q44 24 44 32 V40"/>
+      <path d="M30 44 L18 78"/>
+      <path d="M4 82 V88 Q4 98 14 98 H44"/>
+    </g>
+
+    <g transform="translate(385,0)">
+      <path d="M4 22 V98"/>
+      <path d="M4 60 H28 Q40 60 40 72 V98"/>
+    </g>
+
+    <g transform="translate(460,0)">
+      <path d="M0 22 H36"/>
+      <path d="M18 22 V98"/>
+      <path d="M0 98 H36"/>
+    </g>
+  </g>
+
+  <g fill="#000000" font-family="Menloui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace" font-weight="700">
+    <rect x="105" y="137" width="34" height="3.4" rx="1.4"/>
+    <rect x="375" y="137" width="34" height="3.4" rx="1.4"/>
+
+    <text x="134" y="148" font-size="36">&lt;</text>
+    <text x="362" y="148" font-size="36">&gt;</text>
+
+    <text x="173" y="152" font-size="40">E</text>
+    <text x="199" y="152" font-size="40">w</text>
+    <text x="225" y="152" font-size="40">w</text>
+    <text x="251" y="152" font-size="40">w</text>
+    <text x="277" y="152" font-size="40">z</text>
+    <text x="303" y="152" font-size="40">h</text>
+    <text x="329" y="152" font-size="40">I</text>
+  </g>
+</svg>

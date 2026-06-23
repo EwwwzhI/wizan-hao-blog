@@ -14,8 +14,7 @@ interface Props {
 
 const { collectionType } = Astro.props
 
-const WARNING = `No content available for display.
-  Please review and modify <code>GroupView.astro</code> as needed.`
+const WARNING = `还没有项目内容。可以编辑 <code>src/content/projects/data.json</code> 添加第一张项目卡片。`
 
 let isEmpty = false
 let data: Record<string, GroupItemData[]> = {}

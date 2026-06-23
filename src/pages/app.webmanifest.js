@@ -4,10 +4,9 @@ export async function GET() {
   // https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Manifest
   const manifest = {
     id: withBasePath('/'),
-    name: 'Wutong Yu',
-    short_name: 'Wutong',
-    description:
-      'A streamlined blog and project showcase built with Astro.',
+    name: 'EwwwzhI',
+    short_name: 'EwwwzhI',
+    description: 'EwwwzhI 的个人档案站，记录博客、项目和技术笔记。',
     icons: [
       {
         src: withBasePath('icon-192.png'),

@@ -1,179 +1,199 @@
-# LogoButton 图标替换说明
+# LogoButton 使用说明
 
-这份文档用于说明左上角 `LogoButton` 如何从文字改为 SVG 图标，以及如何根据深浅色主题切换不同的 logo。
+这份文档给后续维护者使用，说明如何在顶部导航左上角配置、替换和调整 `LogoButton` 的 logo。
 
-## 本次目标
+## 相关文件
 
-- 将左上角原本的文字 `WutongYu` 改成图标显示
-- 白天模式显示白底黑标的 `cat-icon-2.svg`
-- 暗黑模式显示黑底白标的 `cat-icon.svg`
-- 保留点击后跳转首页的行为
-- 保留无障碍属性，不影响站点可访问性
-
-## 最终使用的资源
-
-图标文件放在 `public/` 目录下：
+当前 logo 由下面两个文件控制：
 
 ```text
-public/cat-icon.svg
-public/cat-icon-2.svg
+public/ewwwzhi.svg
+src/components/widgets/LogoButton.astro
 ```
 
-说明：
+- `public/ewwwzhi.svg`：实际展示的 logo 资源
+- `LogoButton.astro`：导航栏左上角 logo 组件，负责展示 logo 并链接到首页
 
-- `cat-icon.svg`：用于暗黑模式，黑底白标
-- `cat-icon-2.svg`：用于白天模式，白底黑标
+## 当前用法
 
-之所以放在 `public/` 下，是因为这类静态资源可以直接通过根路径访问，组件里引用时最简单、最稳定。
-
-## 修改文件
-
-本次只修改了一个组件文件：
-
-- `src/components/widgets/LogoButton.astro`
-
-这个组件负责渲染左上角 logo，并包裹首页链接。
-
-## 最终实现
-
-当前组件的核心结构如下：
+`LogoButton.astro` 中通过 `withBasePath()` 引用 `public/` 下的 SVG：
 
 ```astro
-<Link
-  class="select-none op-transition"
-  href={withBasePath('/')}
-  aria-label={SITE.author}
-  aria-current={Astro.url.pathname === `${withBasePath('/')}` ? 'page' : false}
->
-  <div class="logo-container">
-    <img
-      class="logo-icon img-light"
-      src={withBasePath('/cat-icon-2.svg')}
-      alt=""
-      aria-hidden="true"
-    />
-    <img
-      class="logo-icon img-dark"
-      src={withBasePath('/cat-icon.svg')}
-      alt=""
-      aria-hidden="true"
-    />
-  </div>
-</Link>
+<img
+  class="logo-icon"
+  src={withBasePath('/ewwwzhi.svg')}
+  alt=""
+  aria-hidden="true"
+/>
 ```
 
-对应样式如下：
+`public/` 目录里的文件会以站点根路径暴露，所以 `public/ewwwzhi.svg` 在代码里写成：
+
+```astro
+withBasePath('/ewwwzhi.svg')
+```
+
+不要写成：
+
+```astro
+withBasePath('/public/ewwwzhi.svg')
+```
+
+## 替换 logo
+
+如果要换成新的 logo：
+
+1. 把新的 SVG 文件放到 `public/` 目录
+2. 打开 `src/components/widgets/LogoButton.astro`
+3. 修改 `<img>` 的 `src`
+4. 根据新 logo 的比例调整 `.logo-container` 的宽高
+
+例如把 logo 换成 `public/new-logo.svg`：
+
+```astro
+<img
+  class="logo-icon"
+  src={withBasePath('/new-logo.svg')}
+  alt=""
+  aria-hidden="true"
+/>
+```
+
+## 尺寸调整
+
+当前 logo 是横向标识，因此尺寸主要由外层容器控制：
+
+```css
+.logo-container {
+  width: 9.25rem;
+  height: 3.0rem;
+}
+```
+
+移动端尺寸单独配置：
+
+```css
+@media (max-width: 767.9px) {
+  .logo-container {
+    width: 7.25rem;
+    height: 2.1rem;
+  }
+}
+```
+
+调整建议：
+
+- logo 太小：增大 `.logo-container` 的 `width` 和 `height`
+- logo 太宽：只减小 `width`，不要改 SVG 文件
+- logo 太高：减小 `height`
+- 手机端挤占导航空间：只调整 media query 里的尺寸
+
+## 保证完整显示
+
+当前组件通过下面的样式保证 logo 不被裁切：
 
 ```css
 .logo-icon {
-  width: 3rem;
-  height: 3rem;
+  width: 100%;
+  height: 100%;
   display: block;
-  object-fit: cover;
-}
-
-.img-dark {
-  display: none;
-}
-
-:global(html.dark) .img-light {
-  display: none;
-}
-
-:global(html.dark) .img-dark {
-  display: block;
+  object-fit: contain;
+  object-position: left center;
 }
 ```
 
-## 主题切换逻辑
+关键点：
 
-当前逻辑是：
+- `object-fit: contain`：按原始比例完整显示 logo
+- `object-position: left center`：让 logo 靠左并垂直居中
+- 不使用 `object-fit: cover`，否则横向 logo 可能被裁切
+- 不使用圆角裁切，导航 logo 不应该被强制裁成圆形
 
-1. 默认情况下只显示 `.img-light`
-2. `.img-dark` 默认隐藏
-3. 当页面根节点变成 `html.dark` 时：
-4. 隐藏白天版 `.img-light`
-5. 显示暗黑版 `.img-dark`
+如果新 logo 是横向文字标识，建议继续保留 `object-fit: contain`。
 
-也就是说：
+## 暗黑模式
 
-- 白天模式：显示 `cat-icon-2.svg`
-- 暗黑模式：显示 `cat-icon.svg`
-
-## 为什么前面会出现“暗黑模式显示两个 logo”
-
-之前的问题主要来自两个方向：
-
-1. 一开始使用了不够稳的主题选择器，导致组件内样式没有完全按预期覆盖
-2. 后来复用了项目里别处的 `img-light` / `img-dark` 规则，但那个规则原本更多是给正文图片区分主题使用，放到这里不够直观
-
-最后改成在 `LogoButton.astro` 组件内部自己控制显示逻辑，更清晰，也更容易维护。
-
-## 为什么不再用圆形裁切
-
-一开始给 logo 加了：
+当前暗黑模式通过 CSS 反色适配：
 
 ```css
-border-radius: 9999px;
-```
-
-这会强制把图标裁成圆形。
-
-后来你确认“不需要用圆来框住 logo”，因此最终方案里已经移除了圆角，让 SVG 按原本外形显示，不再额外套圆形边界。
-
-## 如何继续调整大小
-
-当前大小在 `src/components/widgets/LogoButton.astro` 中定义为：
-
-```css
-.logo-icon {
-  width: 3rem;
-  height: 3rem;
+:global(html.dark) .logo-icon {
+  filter: invert(1);
 }
 ```
 
-如果你觉得还要继续放大或缩小，只需要改这两个值：
+适用情况：
 
-- 更大：改成 `3.25rem`、`3.5rem`
-- 更小：改成 `2.75rem`、`2.5rem`
+- 原 logo 是深色，暗黑模式下需要变浅
+- SVG 本身颜色比较简单
+- 不想维护两套 logo 资源
 
-建议始终让 `width` 和 `height` 保持一致，这样图标比例最稳定。
+如果新 logo 已经自带暗黑模式适配，或者反色后效果不好，可以删除这段样式：
 
-## 后续替换其他 logo 的方法
+```css
+:global(html.dark) .logo-icon {
+  filter: invert(1);
+}
+```
 
-以后如果你想把猫图标换成新的 logo，按下面步骤操作即可：
+如果需要深浅色两套 logo，也可以改成渲染两个 `<img>`，再用 `html.dark` 控制显示隐藏。但当前项目默认推荐单 SVG 加 CSS 适配。
 
-1. 把新的深色版和浅色版 SVG 放进 `public/`
-2. 修改 `LogoButton.astro` 里的两个 `src`
-3. 如果新图标尺寸视觉上偏大或偏小，再微调 `.logo-icon` 的 `width` 和 `height`
+## 无障碍说明
 
-例如：
+当前 `<img>` 使用：
 
 ```astro
-src={withBasePath('/new-logo-light.svg')}
-src={withBasePath('/new-logo-dark.svg')}
+alt=""
+aria-hidden="true"
 ```
 
-## 推荐的图标格式
+原因是外层链接已经有：
 
-对于这种导航栏 logo，推荐优先使用 `SVG`：
+```astro
+aria-label={SITE.author}
+```
 
-- 清晰，不会因为放大变糊
-- 很适合图形 logo、字母 logo、简洁图标
-- 深浅色各准备一份时，替换也很方便
+也就是说，屏幕阅读器会读外层链接的语义，不需要重复读取图片内容。替换 logo 时通常不需要改这两个属性。
 
-如果以后用位图素材，也可以使用 `PNG` 或 `WebP`，但导航 logo 这类场景通常还是 `SVG` 更合适。
+## 推荐资源格式
 
-## 涉及文件汇总
+导航栏 logo 推荐使用 SVG：
 
-- `public/cat-icon.svg`
-- `public/cat-icon-2.svg`
-- `src/components/widgets/LogoButton.astro`
+- 缩放清晰
+- 文件体积小
+- 适合文字标识和品牌标识
+- 可以通过 CSS 控制尺寸、位置和暗色模式
 
-## 当前结果
+也可以使用 `PNG` 或 `WebP`，但位图在高分屏或放大后可能变糊。除非新 logo 本身就是复杂位图，否则优先使用 SVG。
 
-- 左上角 logo 已从文字切换为 SVG 图标
-- 白天模式和暗黑模式分别显示不同版本
-- 保留原有首页跳转逻辑
-- 不再强制裁切成圆形
-- logo 已比最初版本放大，更适合作为导航品牌标识
+## 常见问题
+
+### logo 显示不完整
+
+检查 `.logo-icon` 是否仍然是：
+
+```css
+object-fit: contain;
+```
+
+如果被改成 `cover`，横向 logo 很容易被裁切。
+
+### logo 和导航项距离太近
+
+适当减小 `.logo-container` 的 `width`，或者检查导航栏整体布局是否空间不足。
+
+### 移动端 logo 太大
+
+只修改 media query 中的尺寸，不要直接改桌面端尺寸：
+
+```css
+@media (max-width: 767.9px) {
+  .logo-container {
+    width: 7.25rem;
+    height: 2.1rem;
+  }
+}
+```
+
+### 暗黑模式颜色不对
+
+先检查是否是 `filter: invert(1)` 导致。如果反色不适合新 logo，可以移除这段样式，或者准备一份专门的暗黑模式 SVG。

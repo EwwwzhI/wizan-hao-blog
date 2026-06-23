@@ -3,12 +3,11 @@ import type { Site, Ui, Features } from './types'
 export const SITE: Site = {
   website: 'https://wutongyu.site/',
   base: '/',
-  title: 'Wutong Yu',
-  description:
-    'A streamlined Astro Antfu-style site with blog, projects, search, and theme switching.',
-  author: 'Wutong Yu',
-  lang: 'en',
-  ogLocale: 'en_US',
+  title: 'EwwwzhI',
+  description: 'EwwwzhI 的个人档案站，记录博客、项目和技术笔记。',
+  author: 'EwwwzhI',
+  lang: 'zh-CN',
+  ogLocale: 'zh_CN',
   imageDomains: [],
 }
 
@@ -32,31 +31,13 @@ export const UI: Ui = {
       displayMode: 'alwaysText',
       text: 'Projects',
     },
-    {
-      path: '/insights',
-      title: 'Insights',
-      displayMode: 'alwaysText',
-      text: 'Insights',
-    },
-    {
-      path: '/friends',
-      title: 'Friends',
-      displayMode: 'alwaysText',
-      text: 'Friends',
-    },
   ],
   socialLinks: [
     {
-      link: 'https://github.com/wutongyuonce/wutong-yu-blog',
+      link: 'https://github.com/wutongyuonce',
       title: 'GitHub',
       displayMode: 'alwaysIcon',
       icon: 'i-uil-github-alt',
-    },
-    {
-      link: 'https://leetcode.cn/u/angry-i3anzaihkg/',
-      title: 'LeetCode',
-      displayMode: 'alwaysIcon',
-      icon: 'i-simple-icons-leetcode',
     },
   ],
   navBarLayout: {

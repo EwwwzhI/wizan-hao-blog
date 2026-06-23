@@ -407,13 +407,11 @@ interface GroupView {
 interface ExternalLink {
   /**
    * Controls whether external links are opened in a new tab.
-   * See {@link https://github.com/lin-stephanie/astro-antfustyle-theme/pull/15 #15} for details.
    */
   newTab: boolean
 
   /**
    * Specifies the cursor type for external links when `newTab` is `true`.
-   * See {@link https://github.com/lin-stephanie/astro-antfustyle-theme/pull/15 #15} for details.
    *
    * Accepts {@link https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#keyword standard keywords},
    * {@link https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#url custom URLs},
@@ -426,7 +424,6 @@ interface ExternalLink {
 
   /**
    * Controls whether to add an indicator to external links when `newTab` is `true`.
-   * See {@link https://github.com/lin-stephanie/astro-antfustyle-theme/pull/15 #15} for details.
    */
   showNewTabIcon: boolean
 }
